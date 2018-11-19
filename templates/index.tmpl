@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{.User.Name}}</title>
+    <style>{{template "style.css"}}</style>
+</head>
+<body>
+    <div class="page">
+        <div class="info">
+            <a href="{{.User.URL}}">
+                <img src="{{.User.Icon}}" />
+            </a>
+            <h1>{{.User.Name}}</h1>
+            <h3>{{.User.Login}}</h3>
+            <p>{{.User.Description}}</p>
+            <hr/>
+            <div class="links">
+                <div class="item">{{template "assets/location.svg"}}{{.User.Location}}</div>
+                <div class="item">{{template "assets/mail.svg"}}<a href="mailto:{{.User.Email}}">{{.User.Email}}</a></div>
+            </div>
+        </div>
+        <div class="tabs">
+            <div class="nav">
+                <a class="item projects" href="#projects">
+                    Projects
+                    <span class="counter">{{len .Projects}}</span>
+                </a>
+                <a class="item contributions" href="#contributions">
+                    Contributions
+                    <span class="counter">{{len .Contributions}}</span>
+                </a>
+            </div>
+            <div class="content projects">
+                {{range .Projects}}
+                    <div class="card">
+                        <a href="{{.URL}}" class="name">
+                            {{if not (eq .Owner.Login $.User.Login)}}
+                                <span class="owner">
+                                    {{.Owner.Login}}
+                                </span>/
+                            {{end}}
+                            {{.Name}}
+                        </a>
+                        <p class="description">
+                            {{.Description}}
+                        </p>
+                        <div class="labels">
+                            {{$URL := .URL}}
+                            {{range .Languages.Nodes}}
+                                <a class="label" href="{{$URL}}/search?l={{.Name}}">
+                                    <span class="color" style="background-color: {{.Color}}"></span>
+                                    {{.Name}}
+                                </a>
+                            {{end}}
+                            {{if gt (len .Languages.Nodes) 0}}
+                                <div class="gap"></div>
+                            {{end}}
+                            {{if gt .Stargazers.Count 0}}
+                                <a class="label" href="{{.URL}}/stargazers">
+                                    {{template "assets/star.svg"}}
+                                    {{.Stargazers.Count}}
+                                </a>
+                            {{end}}
+                        </div>
+                    </div>
+                {{end}}
+            </div>
+            <div class="content contributions">
+                {{range .Contributions}}
+                    <div class="card">
+                        <a href="{{.URL}}" class="name">
+                            <span class="owner">
+                                {{.Owner.Login}}
+                            </span>
+                            /{{.Name}}
+                        </a>
+                        <p class="description">
+                            {{.Pull.Title}}
+                        </p>
+                        <div class="labels">
+                            {{if not (eq .Pull.Number 0)}}
+                                <a class="label fancy merged" href="{{.Pull.URL}}">
+                                    {{template "assets/pull.svg"}}
+                                    #{{.Pull.Number}}
+                                </a>
+                                <div class="gap"></div>
+                            {{end}}
+                            {{if not (eq .Issue.Number 0)}}
+                                <a class="label fancy closed" href="{{.Issue.URL}}">
+                                    {{template "assets/issue.svg"}}
+                                    #{{.Issue.Number}}
+                                </a>
+                            {{end}}
+                        </div>
+                    </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+
+    <script>{{template "script.js"}}</script>
+</body>
+</html>

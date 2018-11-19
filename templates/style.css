@@ -1,0 +1,262 @@
+/*
+
+{{$TopGap := "13vh"}}
+{{$InfoWidth := "230px"}}
+{{$NavHeight := "54px"}}
+{{$ContentHeight := "512px"}}
+{{$CardWidth := "359px"}}
+{{$CardGap := "16px"}}
+
+*/
+
+html {
+    height: 100vh;
+    min-height: 768px;
+    min-width: calc({{$InfoWidth}} + 2*{{$CardWidth}} + 7*{{$CardGap}});
+    overflow: hidden;
+    width: 100%;
+}
+
+body {
+    background-color: #ffffff;
+    color: #24292e;
+    font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    height: calc(100% - {{$TopGap}});
+    line-height: 1.5;
+    margin: 0;
+    position: relative;
+}
+
+.page {
+    margin: {{$TopGap}} auto 0;
+    width: calc({{$InfoWidth}} + 2*{{$CardWidth}} + 3*{{$CardGap}});
+}
+
+    .page .info {
+        display: inline-block;
+        width: {{$InfoWidth}};
+    }
+
+        .page .info img {
+            border-radius: 8px;
+            display: block;
+            height: {{$InfoWidth}};
+            width: {{$InfoWidth}};
+        }
+
+        .page .info h1 {
+            font-size: 26px;
+            line-height: 30px;
+            margin-bottom: 0;
+        }
+
+        .page .info h3 {
+            color: #666666;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 24px;
+            margin: 0;
+        }
+
+        .page .info p {
+            color: #6a737d;
+            font-size: 14px;
+            font-weight: 300;
+            margin: 16px 0 0;
+        }
+
+        .page .info hr {
+            border: none;
+            border-top: 1px solid #eaecef;
+            height: 1px;
+            margin: 11px 0;
+        }
+
+        .page .info .links {
+            font-size: 14px;
+        }
+            .page .info .item {
+                margin-bottom: 2px;
+            }
+
+                .page .info .item .icon {
+                    color: #6a737d;
+                    display: inline-block;
+                    margin-right: 6px;
+                    padding: 2px 2px 0 1px;
+                    transform: translate(0, 3px);
+                }
+
+                .page .info .item a:hover {
+                    text-decoration: underline;
+                }
+
+    .page .tabs {
+        display: inline-block;
+        margin-left: calc(2*{{$CardGap}});
+        margin-top: calc(-{{$NavHeight}} + 2px);
+        overflow-x: hidden;
+        vertical-align: top;
+        width: calc(100% - {{$InfoWidth}} - 2*{{$CardGap}});
+    }
+
+        .page .tabs .nav {
+            border-bottom: 1px solid #d1d5da;
+            height: {{$NavHeight}};
+        }
+
+            .page .tabs .nav a.item {
+                color: #586069;
+                border-bottom: 2px solid transparent;
+                display: inline-block;
+                font-size: 14px;
+                margin-right: 16px;
+                padding: 16px 8px;
+                text-align: center;
+                text-decoration: none;
+            }
+
+            .page .tabs .nav a.item:hover {
+                border-bottom-color: #d1d5da;
+                color: #24292e;
+                text-decoration: none;
+                transition: .2s ease;
+            }
+
+            .page .tabs .nav a.item.hash-active {
+                border-color: #e36209;
+                color: #24292e;
+                font-weight: 600;
+            }
+
+                .page .tabs .nav a.item .counter {
+                    color: #586069;
+                    background-color: rgba(27, 31, 35, .08);
+                    border-radius: 20px;
+                    display: inline-block;
+                    font-size: 12px;
+                    font-weight: 600;
+                    line-height: 1;
+                    margin: 0 3px;
+                    padding: 2px 5px;
+                }
+
+        .page .tabs .content {
+            display: none;
+            height: calc(100vh - {{$TopGap}} - 2*{{$CardGap}});
+            overflow-x: hidden;
+            overflow-y: scroll;
+            padding-top: calc(2*{{$CardGap}});
+            width: calc(100% + 17px);
+        }
+
+        .page .tabs .content.hash-active {
+            display: block;
+        }
+
+            .page .tabs .content .card {
+                border: 1px solid #d1d5da;
+                border-radius: 3px;
+                box-sizing: border-box;
+                display: inline-block;
+                margin-bottom: {{$CardGap}};
+                padding: 16px;
+                vertical-align: top;
+                width: {{$CardWidth}};
+            }
+
+            .page .tabs .content .card:nth-child(2n) {
+                margin-left: {{$CardGap}};
+            }
+
+            .page .tabs .content .card:last-child {
+                margin-bottom: calc(4*{{$CardGap}});
+            }
+
+                .page .tabs .content .card .name {
+                    color: #0366d6;
+                    display: inline-block;
+                    font-size: 14px;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                .page .tabs .content .card .name:hover {
+                    text-decoration: underline;
+                }
+
+                    .page .tabs .content .card .name .owner {
+                        font-weight: 400;
+                    }
+
+                .page .tabs .content .card .description {
+                    color: #6a737d;
+                    display: block;
+                    font-size: 12px;
+                    margin: 8px 0 11px;
+                }
+
+                .page .tabs .content .card .gap {
+                    display: inline-block;
+                    width: 10px;
+                }
+
+                .page .tabs .content .card .label {
+                    color: #6a737d;
+                    display: inline-block;
+                    font-size: 12px;
+                    margin-left: 10px;
+                }
+
+                .page .tabs .content .card .label.fancy {
+                    color: white;
+                    border-radius: 3px;
+                    font-weight: 600;
+                    margin-bottom: -2px;
+                    margin-right: -8px;
+                    padding: 2px 6px;
+                }
+
+                    .page .tabs .content .card .label.fancy .icon {
+                        color: white;
+                    }
+
+                .page .tabs .content .card .label.merged {
+                    background-color: #6f42c1;
+                }
+
+                .page .tabs .content .card .label.closed {
+                    background-color: #cb2431;
+                }
+
+                .page .tabs .content .card .label:first-child {
+                    margin-left: 0;
+                }
+
+                    .page .tabs .content .card .label .color {
+                        background-color: #cccccc;
+                        border-radius: 50%;
+                        display: inline-block;
+                        height: 12px;
+                        margin-right: 4px;
+                        position: relative;
+                        top: 2px;
+                        width: 12px;
+                    }
+
+                    .page .tabs .content .card .label .icon {
+                        color: #586069;
+                        margin-right: 3px;
+                        position: relative;
+                        top: 1px;
+                        vertical-align: text-bottom;
+                    }
+
+a {
+    text-decoration: none;
+    color: #0366d6;
+}
+
+a:focus {
+    outline: none;
+}

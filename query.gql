@@ -1,0 +1,57 @@
+query {
+    user(login: "{{.Login}}") {
+        avatarUrl
+        email
+        bio
+        name
+        login
+        location
+        url
+    }
+    {{range $i, $p := .Projects}}
+        p{{$i}}: repository(owner: "{{$p.Owner}}", name: "{{$p.Name}}") {
+            ...RepoInfo
+        }
+    {{end}}
+    {{range $i, $c :=.Contributions}}
+        c{{$i}}: repository(owner: "{{$c.Owner}}", name: "{{$c.Name}}") {
+            name
+            owner {
+                login
+            }
+            url
+            {{if not (eq $c.Pull 0)}}
+                pullRequest(number: {{$c.Pull}}) {
+                    number
+                    title
+                    url
+                }
+            {{end}}
+            {{if not (eq $c.Issue 0)}}
+                issue(number: {{$c.Issue}}) {
+                    number
+                    url
+                }
+            {{end}}
+        }
+    {{end}}
+}
+
+fragment RepoInfo on Repository {
+    nameWithOwner
+    name
+    owner {
+        login
+    }
+    description
+    url
+    stargazers {
+        totalCount
+    }
+    languages(first: 3, orderBy: {field: SIZE, direction: DESC}) {
+        nodes {
+            name
+            color
+        }
+    }
+}
