@@ -1,10 +1,9 @@
-package main
+package website
 
 import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -37,42 +36,20 @@ func walker(dir string, tmpl *template.Template) func(string, os.FileInfo, error
 	}
 }
 
-// Render generates the static files from the config and API data.
-func Render(c *Config, r *Response) error {
+func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 	tmpl := template.New("")
-	dir := filepath.Clean(c.Templates)
+	dir = filepath.Clean(dir)
 
 	err := filepath.Walk(dir, walker(dir, tmpl))
 	if err != nil {
-		return fmt.Errorf("could not collect all templates: %s", err)
+		return nil, fmt.Errorf("could not collect all templates: %s", err)
 	}
 
 	b := bytes.Buffer{}
-	err = tmpl.ExecuteTemplate(&b, c.RootName, r)
+	err = tmpl.ExecuteTemplate(&b, entry, d)
 	if err != nil {
-		return fmt.Errorf("could not execute template: %s", err)
+		return nil, fmt.Errorf("could not execute template: %s", err)
 	}
 
-	f, err := os.Create(c.OutPath)
-	if err != nil {
-		return fmt.Errorf("could not create output file: %s", err)
-	}
-
-	for {
-		line, readErr := b.ReadBytes('\n')
-		if readErr != nil && readErr != io.EOF {
-			return fmt.Errorf("could not read line from executed template: %s", err)
-		}
-
-		_, err = f.Write(bytes.TrimSpace(line))
-		if err != nil {
-			return fmt.Errorf("could not write to output file: %s", err)
-		}
-
-		if readErr == io.EOF {
-			break
-		}
-	}
-
-	return nil
+	return &b, nil
 }
