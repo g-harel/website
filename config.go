@@ -64,7 +64,7 @@ func (c *Config) Parse(text string) (*Config, error) {
 
 	for _, contribution := range contributions {
 		parts := strings.Split(contribution, " ")
-		if len(parts) != 2 {
+		if len(parts) != 3 {
 			return nil, fmt.Errorf("malformed contribution config: \"%s\"", contribution)
 		}
 
@@ -143,7 +143,7 @@ var query = `
 				}
 				url
 				{{if not (eq $c.Pull 0)}}
-					pullcuest(number: {{$c.Pull}}) {
+					pullRequest(number: {{$c.Pull}}) {
 						number
 						title
 						url

@@ -35,7 +35,7 @@ var env = struct {
 	UploadCredentials: os.Getenv("UPLOAD_CREDENTIALS"),
 }
 
-// Returned errors are not yet logged (alpha).
+// Returned errors are not yet logged (go cloud function alpha).
 func fatal(format string, a ...interface{}) error {
 	err := fmt.Errorf("fatal error: %v", fmt.Sprintf(format, a...))
 	fmt.Fprint(os.Stderr, err.Error())
@@ -54,7 +54,7 @@ func Build(ctx context.Context, _ interface{}) error {
 
 	configRes, err := httpClient.Do(configReq)
 	if err != nil {
-		return fatal("request for remote config failed")
+		return fatal("request for remote config failed: %v", err)
 	}
 
 	configBody := &bytes.Buffer{}
@@ -111,20 +111,11 @@ func Build(ctx context.Context, _ interface{}) error {
 	}
 
 	storageObject := storageClient.Bucket(env.UploadBucket).Object(env.UploadName).NewWriter(ctx)
-	for {
-		line, readErr := output.ReadBytes('\n')
-		if readErr != nil && readErr != io.EOF {
-			return fmt.Errorf("could not read line from render output: %s", err)
-		}
+	defer storageObject.Close()
 
-		_, err = storageObject.Write(bytes.TrimSpace(line))
-		if err != nil {
-			return fmt.Errorf("could not write to response: %s", err)
-		}
-
-		if readErr == io.EOF {
-			break
-		}
+	_, err = io.Copy(storageObject, output)
+	if err != nil {
+		return fmt.Errorf("could not write output to storage: %s", err)
 	}
 
 	return nil

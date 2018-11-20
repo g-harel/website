@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -45,11 +46,28 @@ func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 		return nil, fmt.Errorf("could not collect all templates: %s", err)
 	}
 
-	b := bytes.Buffer{}
-	err = tmpl.ExecuteTemplate(&b, entry, d)
+	original := &bytes.Buffer{}
+	err = tmpl.ExecuteTemplate(original, entry, d)
 	if err != nil {
 		return nil, fmt.Errorf("could not execute template: %s", err)
 	}
 
-	return &b, nil
+	transformed := &bytes.Buffer{}
+	for {
+		line, readErr := original.ReadBytes('\n')
+		if readErr != nil && readErr != io.EOF {
+			return nil, fmt.Errorf("could not read line from template output: %s", err)
+		}
+
+		_, err = transformed.Write(bytes.TrimSpace(line))
+		if err != nil {
+			return nil, fmt.Errorf("could not write to transformed template output: %s", err)
+		}
+
+		if readErr == io.EOF {
+			break
+		}
+	}
+
+	return transformed, nil
 }

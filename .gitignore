@@ -8,5 +8,6 @@
 
 .terraform
 .env
+index.html
 terraform/service-account.json
 terraform/*.backup
