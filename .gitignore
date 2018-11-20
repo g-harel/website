@@ -9,5 +9,5 @@
 .terraform
 .env
 index.html
-terraform/service-account.json
+terraform/.secret
 terraform/*.backup
