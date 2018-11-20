@@ -33,6 +33,7 @@
                     <span class="counter">{{len .Contributions}}</span>
                 </a>
             </div>
+            <div class="shade"></div>
             <div class="content projects">
                 {{range .Projects}}
                     <div class="card">
@@ -101,6 +102,7 @@
         </div>
     </div>
 
-    <script>{{template "script.js"}}</script>
+    <script>;(function(){ {{template "scripts/navigation.js"}} })()</script>
+    <script>;(function(){ {{template "scripts/scroll.js"}} })()</script>
 </body>
 </html>

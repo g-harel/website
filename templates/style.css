@@ -138,13 +138,28 @@ body {
                     padding: 2px 5px;
                 }
 
+        .page .tabs .shade {
+            background-color: rgba(3, 102, 214, 0.07);
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            transition: all 0.2s ease;
+            width: 100%;
+            z-index: 1;
+        }
+
         .page .tabs .content {
             display: none;
-            height: calc(100vh - var(--top-gap) - 2*var(--card-gap));
+            max-height: calc(100vh - var(--top-gap) - 2*var(--card-gap));
             overflow-x: hidden;
             overflow-y: scroll;
             padding-top: calc(2*var(--card-gap));
+            position: relative;
             width: calc(100% + 17px);
+            z-index: 2;
         }
 
         .page .tabs .content.hash-active {
@@ -152,6 +167,7 @@ body {
         }
 
             .page .tabs .content .card {
+                background-color: #ffffff;
                 border: 1px solid #d1d5da;
                 border-radius: 3px;
                 box-sizing: border-box;
@@ -162,11 +178,11 @@ body {
                 width: var(--card-width);
             }
 
-            .page .tabs .content .card:nth-child(2n) {
+            .page .tabs .content .card:nth-of-type(2n) {
                 margin-left: var(--card-gap);
             }
 
-            .page .tabs .content .card:last-child {
+            .page .tabs .content .card:last-of-type {
                 margin-bottom: calc(4*var(--card-gap));
             }
 
