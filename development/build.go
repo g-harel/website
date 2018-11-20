@@ -28,11 +28,13 @@ var env = struct {
 	OutputFile:      "index.html",
 }
 
+// Fatal errors are formatted/printed to stderr and the process exits.
 func fatal(format string, a ...interface{}) {
 	fmt.Fprintf(os.Stderr, "\033[31;1m\nerror: %s\033[0m\n\n", fmt.Sprintf(format, a...))
 	os.Exit(1)
 }
 
+// Renders output from local config to local file, but still queries for api data.
 func main() {
 	start := time.Now()
 

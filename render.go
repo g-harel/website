@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // Generator for a file tree walker which recursively collects files into a template.
@@ -53,6 +54,7 @@ func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 	}
 
 	transformed := &bytes.Buffer{}
+	fmt.Fprintf(transformed, "<!-- %v -->\n", time.Now().Format(time.RFC1123))
 	for {
 		line, readErr := original.ReadBytes('\n')
 		if readErr != nil && readErr != io.EOF {

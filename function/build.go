@@ -42,6 +42,9 @@ func fatal(format string, a ...interface{}) error {
 	return err
 }
 
+// Build is a background function triggered by messages to a pub/sub topic.
+// It will build a new version of the website from a remote config and updated api data.
+// The result is uploaded to a public cloud storage bucket.
 func Build(ctx context.Context, _ interface{}) error {
 	httpClient := http.Client{
 		Timeout: 10 * time.Second,
