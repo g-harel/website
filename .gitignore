@@ -9,5 +9,5 @@
 .terraform
 .env
 index.html
-terraform/.secret
+terraform/.*
 terraform/*.backup
