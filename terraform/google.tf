@@ -37,8 +37,11 @@ resource "google_storage_bucket_object" "build_function" {
 
 resource "google_cloudfunctions_function" "build" {
     name = "build"
-    available_memory_mb = 128
     region = "us-east1"
+    available_memory_mb = 128
+
+    runtime = "go111"
+    entry_point = "Build"
 
     source_archive_bucket = "${google_storage_bucket.functions.name}"
     source_archive_object = "${google_storage_bucket_object.build_function.name}"
