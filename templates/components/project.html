@@ -1,6 +1,10 @@
 {{template "styles/global.html"}}
 {{template "styles/card.html"}}
 
+{{define "icon-star"}}
+    <svg class="icon" viewBox="0 0 14 16" version="1.1" width="14" height="16" role="img"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z" fill="currentColor"></path></svg>
+{{end}}
+
 <div class="card">
     <a href="{{.URL}}" class="name">
         {{if not (eq .Owner.Login rootData.User.Login)}}
@@ -26,7 +30,7 @@
         {{end}}
         {{if gt .Stargazers.Count 0}}
             <a class="label" href="{{.URL}}/stargazers">
-                {{template "assets/star.svg"}}
+                {{template "icon-star"}}
                 {{.Stargazers.Count}}
             </a>
         {{end}}

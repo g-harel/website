@@ -2,12 +2,11 @@
 
 <!--
 
-nodemon -e go,html,css,js,svg -x "dotenv go run ./development/build.go"
-
-upload function with terraform
-add github link/you are here?
+add environment variable secrets (https://www.vaultproject.io/)
+add documentation (https://www.terraform.io/docs/configuration/providers.html#third-party-plugins)
 add comments
 add diagram
-pure go dev mode
+add secrets to function envrionment variables
+pure go dev mode (nodemon -e go,html,css,js,svg -x "dotenv go run ./development/build.go")
 
  -->

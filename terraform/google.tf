@@ -16,13 +16,13 @@ resource "google_storage_default_object_acl" "public_website" {
 }
 
 resource "google_pubsub_topic" "build_triggers" {
-  name = "build-triggers"
+    name = "build-triggers"
 }
 
 data "archive_file" "build_function" {
     type = "zip"
-    source_dir = "${path.module}/../function"
-    output_path = "${path.module}/.functions/build.zip"
+    source_dir = "${path.module}/.temp/build"
+    output_path = "${path.module}/.temp/build.zip"
 }
 
 resource "google_storage_bucket" "functions" {
@@ -30,9 +30,9 @@ resource "google_storage_bucket" "functions" {
 }
 
 resource "google_storage_bucket_object" "build_function" {
-  name   = "build.zip"
-  source = "${data.archive_file.build_function.output_path}"
-  bucket = "${google_storage_bucket.functions.name}"
+    name   = "build.zip"
+    source = "${data.archive_file.build_function.output_path}"
+    bucket = "${google_storage_bucket.functions.name}"
 }
 
 resource "google_cloudfunctions_function" "build" {
