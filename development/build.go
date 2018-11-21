@@ -22,7 +22,7 @@ var env = struct {
 }{
 	ConfigPath:      ".config",
 	TemplateDir:     "templates",
-	TemplateEntry:   "index.tmpl",
+	TemplateEntry:   "entry.html",
 	GraphQLEndpoint: "https://api.github.com/graphql",
 	GraphQLToken:    os.Getenv("GRAPHQL_TOKEN"),
 	OutputFile:      "index.html",

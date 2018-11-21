@@ -1,0 +1,38 @@
+{{if first "styles/global.html"}}
+    <style>
+        :root {
+            --color-background: #ffffff;
+            --color-anchor: #0366d6;
+            --color-merged: #6f42c1;
+            --color-closed: #cb2431;
+            --color-highlight: #e36209;
+
+            --grey-light: #d1d5da;
+            --grey-medium: #6a737d;
+            --grey-dark: #586069;
+            --grey-black: #24292e;
+
+            --gap-top: 13vh;
+            --gap-card: 16px;
+
+            --height-nav: 54px;
+
+            --width-info: 230px;
+            --width-page: calc(var(--width-info) + var(--width-tabs) + 2*var(--gap-card));
+            --width-tabs: 734px;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--grey-black);
+            font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-anchor);
+        }
+    </style>
+{{end}}

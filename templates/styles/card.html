@@ -1,0 +1,95 @@
+{{template "styles/global.html"}}
+
+{{if first "styles/card.html"}}
+    <style>
+        .card {
+            background-color: var(--color-background);
+            border-radius: 3px;
+            border: 1px solid var(--grey-light);
+            box-sizing: border-box;
+            display: inline-block;
+            margin-bottom: var(--gap-card);
+            padding: 16px;
+            vertical-align: top;
+            width: calc(50% - var(--gap-card)/2);
+        }
+
+        .card:nth-of-type(2n) {
+            margin-left: var(--gap-card);
+        }
+
+        .card .name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card .name:hover {
+            text-decoration: underline;
+        }
+
+        .card .name .owner {
+            font-weight: 400;
+        }
+
+        .card .description {
+            color: var(--grey-medium);
+            font-size: 12px;
+            margin: 8px 0 11px;
+        }
+
+        .card .gap {
+            display: inline-block;
+            width: 10px;
+        }
+
+        .card .label {
+            color: var(--grey-medium);
+            display: inline-block;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .card .label.fancy {
+            border-radius: 3px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: -2px;
+            margin-right: -8px;
+            padding: 2px 6px;
+        }
+
+        .card .label.fancy .icon {
+            color: white;
+        }
+
+        .card .label.merged {
+            background-color: var(--color-merged);
+        }
+
+        .card .label.closed {
+            background-color: var(--color-closed);
+        }
+
+        .card .label:first-child {
+            margin-left: 0;
+        }
+
+        .card .label .color {
+            background-color: #cccccc;
+            border-radius: 50%;
+            display: inline-block;
+            height: 12px;
+            margin-right: 4px;
+            transform: translate(0, 2px);
+            width: 12px;
+        }
+
+        .card .label .icon {
+            color: var(--grey-dark);
+            margin-right: 3px;
+            position: relative;
+            transform: translate(0, 1px);
+            vertical-align: text-bottom;
+        }
+    </style>
+{{end}}

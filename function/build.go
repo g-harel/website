@@ -54,6 +54,7 @@ func Build(ctx context.Context, _ interface{}) error {
 	if err != nil {
 		return fatal("could not create remote config request: %v", err)
 	}
+	configReq = configReq.WithContext(ctx)
 
 	configRes, err := httpClient.Do(configReq)
 	if err != nil {
@@ -80,6 +81,7 @@ func Build(ctx context.Context, _ interface{}) error {
 	if err != nil {
 		return fatal("could not create data request: %v", err)
 	}
+	dataReq = dataReq.WithContext(ctx)
 	dataReq.Header.Add("Authorization", fmt.Sprintf("bearer %v", env.GraphQLToken))
 
 	dataRes, err := httpClient.Do(dataReq)

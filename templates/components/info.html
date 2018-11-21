@@ -1,0 +1,74 @@
+{{template "styles/global.html"}}
+
+{{if first "components/info.html"}}
+    <style>
+        .info img {
+            border-radius: 8px;
+            display: block;
+            height: var(--width-info);
+            width: var(--width-info);
+        }
+
+        .info h1 {
+            font-size: 26px;
+            line-height: 30px;
+            margin-bottom: 0;
+        }
+
+        .info h3 {
+            color: #666666;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 24px;
+            margin: 0;
+        }
+
+        .info p {
+            color: var(--grey-medium);
+            font-size: 14px;
+            font-weight: 300;
+            margin: 16px 0 0;
+        }
+
+        .info hr {
+            border: none;
+            border-top: 1px solid #eaecef;
+            height: 1px;
+            margin: 11px 0;
+        }
+
+        .info .links {
+            font-size: 14px;
+        }
+
+        .info .item {
+            margin-bottom: 2px;
+        }
+
+        .info .item .icon {
+            color: var(--grey-medium);
+            display: inline-block;
+            margin-right: 6px;
+            padding: 2px 2px 0 1px;
+            transform: translate(0, 3px);
+        }
+
+        .info .item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{{end}}
+
+<div class="info">
+    <a href="{{.User.URL}}">
+        <img src="{{.User.Icon}}" />
+    </a>
+    <h1>{{.User.Name}}</h1>
+    <h3>{{.User.Login}}</h3>
+    <p>{{.User.Description}}</p>
+    <hr/>
+    <div class="links">
+        <div class="item">{{template "assets/location.svg"}}{{.User.Location}}</div>
+        <div class="item">{{template "assets/mail.svg"}}<a href="mailto:{{.User.Email}}">{{.User.Email}}</a></div>
+    </div>
+</div>

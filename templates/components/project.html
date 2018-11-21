@@ -1,0 +1,34 @@
+{{template "styles/global.html"}}
+{{template "styles/card.html"}}
+
+<div class="card">
+    <a href="{{.URL}}" class="name">
+        {{if not (eq .Owner.Login rootData.User.Login)}}
+            <span class="owner">
+                {{.Owner.Login}}
+            </span>/
+        {{end}}
+        {{.Name}}
+    </a>
+    <p class="description">
+        {{.Description}}
+    </p>
+    <div class="labels">
+        {{$URL := .URL}}
+        {{range .Languages.Nodes}}
+            <a class="label" href="{{$URL}}/search?l={{.Name}}">
+                <span class="color" style="background-color: {{.Color}}"></span>
+                {{.Name}}
+            </a>
+        {{end}}
+        {{if gt (len .Languages.Nodes) 0}}
+            <div class="gap"></div>
+        {{end}}
+        {{if gt .Stargazers.Count 0}}
+            <a class="label" href="{{.URL}}/stargazers">
+                {{template "assets/star.svg"}}
+                {{.Stargazers.Count}}
+            </a>
+        {{end}}
+    </div>
+</div>

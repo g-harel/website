@@ -1,0 +1,44 @@
+{{template "styles/global.html"}}
+
+{{if first "styles/layout.html"}}
+    <style>
+        html {
+            min-height: 768px;
+            min-width: var(--width-page);
+            overflow-y: scroll;
+            width: 100%;
+        }
+
+        .info-wrapper {
+            background-color: var(--color-background);
+            height: 100%;
+            padding-left: calc(50% - var(--width-page)/2);
+            padding-right: var(--gap-card);
+            padding-top: var(--gap-top);
+            position: fixed;
+            width: var(--width-info);
+            z-index: 1;
+        }
+
+        .tabs-wrapper {
+            background-color: var(--color-background);
+            padding-left: calc(50% - var(--width-page)/2 + var(--width-info) + 2*var(--gap-card));
+            padding-top: calc(var(--gap-top) - var(--height-nav) + 1px);
+            position: fixed;
+            width: var(--width-tabs);
+            z-index: 1;
+        }
+
+        .cards-wrapper {
+            padding-bottom: calc(4*var(--gap-card));
+            padding-left: calc(50% - var(--width-page)/2 + var(--width-info) + 2*var(--gap-card));
+            padding-top: calc(var(--gap-top) + 2*var(--gap-card) + 1px);
+            width: var(--width-tabs);
+            z-index: 0;
+        }
+
+        .cards-wrapper > div:not(.hash-active) {
+            display: none;
+        }
+    </style>
+{{end}}

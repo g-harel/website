@@ -1,0 +1,29 @@
+{{template "styles/global.html"}}
+{{template "styles/card.html"}}
+
+<div class="card">
+    <a href="{{.URL}}" class="name">
+        <span class="owner">
+            {{.Owner.Login}}
+        </span>/
+        {{.Name}}
+    </a>
+    <p class="description">
+        {{.Pull.Title}}
+    </p>
+    <div class="labels">
+        {{if not (eq .Pull.Number 0)}}
+            <a class="label fancy merged" href="{{.Pull.URL}}">
+                {{template "assets/pull.svg"}}
+                #{{.Pull.Number}}
+            </a>
+            <div class="gap"></div>
+        {{end}}
+        {{if not (eq .Issue.Number 0)}}
+            <a class="label fancy closed" href="{{.Issue.URL}}">
+                {{template "assets/issue.svg"}}
+                #{{.Issue.Number}}
+            </a>
+        {{end}}
+    </div>
+</div>

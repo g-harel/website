@@ -1,0 +1,113 @@
+{{template "styles/global.html"}}
+
+{{if first "components/tabs.html"}}
+    <style>
+        .nav {
+            border-bottom: 1px solid var(--grey-light);
+            height: var(--height-nav);
+        }
+
+        .nav .item {
+            color: var(--grey-dark);
+            border-bottom: 2px solid transparent;
+            display: inline-block;
+            font-size: 14px;
+            margin-right: 16px;
+            padding: 16px 8px;
+            text-align: center;
+        }
+
+        .nav .item:focus {
+            outline: none;
+        }
+
+        .nav .item:hover {
+            border-bottom-color: var(--grey-light);
+            color: var(--grey-black);
+            transition: .2s ease;
+        }
+
+        .nav .item.hash-active {
+            border-color: var(--color-highlight);
+            color: var(--grey-black);
+            font-weight: 600;
+        }
+
+        .nav .item .counter {
+            color: var(--grey-dark);
+            background-color: rgba(27, 31, 35, .08);
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1;
+            margin: 0 3px;
+            padding: 2px 5px;
+        }
+    </style>
+
+    <script>
+        // Default hash will be active if the current one is empty/invalid.
+        var defaultHash = "#projects";
+
+        // This class is added/removed from dom elements to control styling.
+        var activeClass = "hash-active";
+
+        function isValidHash(hash) {
+            if (!hash) {
+                return false;
+            }
+            if ([defaultHash, "#contributions"].indexOf(hash) === -1) {
+                return false;
+            }
+            return true;
+        }
+
+        function updateActive() {
+            var hash = document.location.hash;
+
+            if (!isValidHash(hash)) {
+                document.location.hash = defaultHash;
+                // Because this function is listening to hash changes,
+                // the first invocation must not run if it reassigns
+                // the hash value.
+                return;
+            }
+
+            var formattedHash = hash.replace(/^#/, "");
+            if (formattedHash === "") {
+                return;
+            }
+
+            // Previously active elements have the active class removed.
+            var oldActive = document.querySelectorAll("." + activeClass);
+            for (var i = 0; i < oldActive.length; i++) {
+                oldActive[i].classList.remove(activeClass);
+            }
+
+            // Newly active elements have the active class added.
+            var newActive = document.querySelectorAll("." + formattedHash);
+            for (var i = 0; i < newActive.length; i++) {
+                newActive[i].classList.add(activeClass);
+            }
+        }
+
+        window.addEventListener("hashchange", updateActive);
+        document.addEventListener("DOMContentLoaded", updateActive);
+
+        if (!isValidHash(document.location.hash)) {
+            document.location.hash = defaultHash;
+        }
+    </script>
+{{end}}
+
+<div class="nav">
+    <a class="item projects" href="#projects">
+        Projects
+        <span class="counter">{{len .Projects}}</span>
+    </a>
+    <a class="item contributions" href="#contributions">
+        Contributions
+        <span class="counter">{{len .Contributions}}</span>
+    </a>
+</div>

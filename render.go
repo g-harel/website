@@ -42,6 +42,18 @@ func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 	tmpl := template.New("")
 	dir = filepath.Clean(dir)
 
+	seen := map[string]bool{}
+	tmpl = tmpl.Funcs(template.FuncMap{
+		// Used to check if blocks have already been included.
+		"first": func(path string) (f bool) {
+			f, seen[path] = !seen[path], true
+			return
+		},
+		"rootData": func() *Data {
+			return d
+		},
+	})
+
 	err := filepath.Walk(dir, walker(dir, tmpl))
 	if err != nil {
 		return nil, fmt.Errorf("could not collect all templates: %s", err)

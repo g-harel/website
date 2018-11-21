@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{.User.Name}}</title>
+    {{template "styles/global.html"}}
+    {{template "styles/layout.html"}}
+</head>
+<body>
+    <div class="tabs-wrapper">
+        {{template "components/tabs.html" .}}
+    </div>
+    <div class="info-wrapper">
+        {{template "components/info.html" .}}
+    </div>
+    <div class="cards-wrapper">
+        <div class="projects">
+            {{range .Projects}}
+                {{template "components/project.html" .}}
+            {{end}}
+        </div>
+        <div class="contributions">
+            {{range .Contributions}}
+                {{template "components/contribution.html" .}}
+            {{end}}
+        </div>
+    </div>
+    <script>
+        // Page contents are only made visible after tabbed navigation has
+        // loaded to prevent flash of empty content.
+        document.body.style.opacity = 0;
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.opacity = 1;
+        });
+    </script>
+</body>
+</html>
