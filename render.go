@@ -26,18 +26,20 @@ func walker(dir string, tmpl *template.Template) func(string, os.FileInfo, error
 
 		b, err := ioutil.ReadFile(path)
 		if err != nil {
-			return fmt.Errorf("could not read template file: %s", err)
+			return fmt.Errorf("could not read template file: %v", err)
 		}
 
 		_, err = tmpl.New(strings.TrimPrefix(path, dir+"/")).Parse(string(b))
 		if err != nil {
-			return fmt.Errorf("could not parse template: %s", err)
+			return fmt.Errorf("could not parse template: %v", err)
 		}
 
 		return nil
 	}
 }
 
+// Render executes all templates in the provided directory using the given data.
+// Output is "minified" by trimming the space around each line and current time is prepended.
 func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 	tmpl := template.New("")
 	dir = filepath.Clean(dir)
@@ -56,13 +58,13 @@ func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 
 	err := filepath.Walk(dir, walker(dir, tmpl))
 	if err != nil {
-		return nil, fmt.Errorf("could not collect all templates: %s", err)
+		return nil, fmt.Errorf("could not collect all templates: %v", err)
 	}
 
 	original := &bytes.Buffer{}
 	err = tmpl.ExecuteTemplate(original, entry, d)
 	if err != nil {
-		return nil, fmt.Errorf("could not execute template: %s", err)
+		return nil, fmt.Errorf("could not execute template: %v", err)
 	}
 
 	transformed := &bytes.Buffer{}
@@ -70,12 +72,12 @@ func Render(dir, entry string, d *Data) (*bytes.Buffer, error) {
 	for {
 		line, readErr := original.ReadBytes('\n')
 		if readErr != nil && readErr != io.EOF {
-			return nil, fmt.Errorf("could not read line from template output: %s", err)
+			return nil, fmt.Errorf("could not read line from template output: %v", err)
 		}
 
 		_, err = transformed.Write(bytes.TrimSpace(line))
 		if err != nil {
-			return nil, fmt.Errorf("could not write to transformed template output: %s", err)
+			return nil, fmt.Errorf("could not write to transformed template output: %v", err)
 		}
 
 		if readErr == io.EOF {

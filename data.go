@@ -6,12 +6,14 @@ import (
 	"strconv"
 )
 
+// Data represents the combined response data from Config's query.
 type Data struct {
 	User          *UserData
 	Projects      []*ProjectData
 	Contributions []*ContributionData
 }
 
+// UserData represents the user data from Config's query.
 type UserData struct {
 	Icon        string `json:"avatarUrl"`
 	Email       string `json:"email"`
@@ -22,6 +24,7 @@ type UserData struct {
 	URL         string `json:"url"`
 }
 
+// ProjectData represents a project data item from Config's query.
 type ProjectData struct {
 	FullName string `json:"nameWithOwner"`
 	Name     string `json:"name"`
@@ -41,6 +44,7 @@ type ProjectData struct {
 	} `json:"languages"`
 }
 
+// ContributionData represents a contribution data item from Config's query.
 type ContributionData struct {
 	Name  string `json:"name"`
 	URL   string `json:"url"`
@@ -58,6 +62,7 @@ type ContributionData struct {
 	} `json:"issue"`
 }
 
+// GQLResponse represents a a generic GraphQL json response.
 type GQLResponse struct {
 	Data   map[string]*json.RawMessage `json:"data"`
 	Errors []struct {
@@ -69,15 +74,16 @@ type GQLResponse struct {
 	} `json:"errors"`
 }
 
+// Parse populates the fields of its receiver with unmarshalled contents from the raw json data.
 func (d *Data) Parse(text string) (*Data, error) {
 	res := &GQLResponse{}
 	err := json.Unmarshal([]byte(text), res)
 	if err != nil {
-		return nil, fmt.Errorf("could not parse input: %v", err)
+		return nil, fmt.Errorf("could not parse raw data: %v", err)
 	}
 
 	if res.Data == nil {
-		return nil, fmt.Errorf("malformed input format, no data: %v", text)
+		return nil, fmt.Errorf("malformed raw data: %v", text)
 	}
 	if len(res.Errors) > 0 {
 		return nil, fmt.Errorf("error (1/%v): %v", len(res.Errors), res.Errors[0].Message)

@@ -30,7 +30,7 @@ var env = struct {
 
 // Fatal errors are formatted/printed to stderr and the process exits.
 func fatal(format string, a ...interface{}) {
-	fmt.Fprintf(os.Stderr, "\033[31;1m\nerror: %s\033[0m\n\n", fmt.Sprintf(format, a...))
+	fmt.Fprintf(os.Stderr, "\033[31;1m\nerror: %v\033[0m\n\n", fmt.Sprintf(format, a...))
 	os.Exit(1)
 }
 
@@ -50,7 +50,7 @@ func main() {
 
 	query, err := config.Query()
 	if err != nil {
-		fatal("could not generate query from config: %s", err)
+		fatal("could not generate query from config: %v", err)
 	}
 
 	dataReq, err := http.NewRequest("POST", env.GraphQLEndpoint, bytes.NewReader(query))
@@ -82,8 +82,8 @@ func main() {
 
 	err = ioutil.WriteFile(env.OutputFile, output.Bytes(), 0644)
 	if err != nil {
-		fatal("could not write rendered output to file: %s", err)
+		fatal("could not write rendered output to file: %v", err)
 	}
 
-	fmt.Printf("\nbuilt in %s\n\n", time.Since(start))
+	fmt.Printf("\nbuilt in %v\n\n", time.Since(start))
 }

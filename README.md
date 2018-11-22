@@ -2,7 +2,7 @@
 
 nodemon -e go,html,css,js,svg -x "dotenv go run ./development/build.go"
 
-add comments
+change cloudflare zone settings https://www.terraform.io/docs/providers/cloudflare/r/zone_settings_override.html
 add CV link + hosted
 add analytics?
 add mobile banner

@@ -72,7 +72,7 @@ func Build(ctx context.Context, _ interface{}) error {
 
 	query, err := config.Query()
 	if err != nil {
-		return fatal("could not generate query from config: %s", err)
+		return fatal("could not generate query from config: %v", err)
 	}
 
 	dataReq, err := http.NewRequest("POST", env.GraphQLEndpoint, bytes.NewReader(query))
@@ -112,12 +112,12 @@ func Build(ctx context.Context, _ interface{}) error {
 
 	_, err = io.Copy(storageObject, output)
 	if err != nil {
-		return fatal("could not write output to storage: %s", err)
+		return fatal("could not write output to storage: %v", err)
 	}
 
 	err = storageObject.Close()
 	if err != nil {
-		return fatal("storage write failed: %s", err)
+		return fatal("storage write failed: %v", err)
 	}
 
 	return nil
