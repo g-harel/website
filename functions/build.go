@@ -1,4 +1,4 @@
-package function
+package functions
 
 import (
 	"bytes"
@@ -11,8 +11,6 @@ import (
 
 	"cloud.google.com/go/storage"
 	"github.com/g-harel/website"
-	"golang.org/x/oauth2/google"
-	"google.golang.org/api/option"
 )
 
 var env = struct {
@@ -105,22 +103,21 @@ func Build(ctx context.Context, _ interface{}) error {
 		return fatal("could not render templates: %v", err)
 	}
 
-	credentials, err := google.CredentialsFromJSON(ctx, []byte(env.UploadCredentials))
+	storageClient, err := storage.NewClient(ctx)
 	if err != nil {
-		return fmt.Errorf("could not create credentials from env: %v", err)
-	}
-
-	storageClient, err := storage.NewClient(ctx, option.WithCredentials(credentials))
-	if err != nil {
-		return fmt.Errorf("could not create storage client: %v", err)
+		return fatal("could not create storage client: %v", err)
 	}
 
 	storageObject := storageClient.Bucket(env.UploadBucket).Object(env.UploadName).NewWriter(ctx)
-	defer storageObject.Close()
 
 	_, err = io.Copy(storageObject, output)
 	if err != nil {
-		return fmt.Errorf("could not write output to storage: %s", err)
+		return fatal("could not write output to storage: %s", err)
+	}
+
+	err = storageObject.Close()
+	if err != nil {
+		return fatal("storage write failed: %s", err)
 	}
 
 	return nil

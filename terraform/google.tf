@@ -21,8 +21,8 @@ resource "google_pubsub_topic" "build_triggers" {
 
 data "archive_file" "build_function" {
     type = "zip"
-    source_dir = "${path.module}/.temp/build"
-    output_path = "${path.module}/.temp/build.zip"
+    source_dir = ".temp/build"
+    output_path = ".temp/build.zip"
 }
 
 resource "google_storage_bucket" "functions" {
@@ -36,18 +36,30 @@ resource "google_storage_bucket_object" "build_function" {
 }
 
 resource "google_cloudfunctions_function" "build" {
-    name = "build"
-    region = "us-east1"
-    available_memory_mb = 128
-
-    runtime = "go111"
-    entry_point = "Build"
-
+    # name used to recreate resource when source changes
+    name = "build-${substr(google_storage_bucket_object.build_function.md5hash, 0, 8)}"
     source_archive_bucket = "${google_storage_bucket.functions.name}"
     source_archive_object = "${google_storage_bucket_object.build_function.name}"
+
+    region = "us-east1"
+    runtime = "go111"
+    available_memory_mb = 128
+    entry_point = "Build"
+    timeout = 30
 
     event_trigger = {
         event_type = "providers/cloud.pubsub/eventTypes/topic.publish"
         resource = "${google_pubsub_topic.build_triggers.name}"
+    }
+
+    environment_variables = {
+        CONFIG_SRC = "https://raw.githubusercontent.com/g-harel/website/master/.config"
+        TEMPLATE_DIR = "/srv/files/templates"
+        TEMPLATE_ENTRY = "entry.html"
+        GRAPHQL_ENDPOINT = "https://api.github.com/graphql"
+        GRAPHQL_TOKEN = "${file(".secret/github.token")}"
+        UPLOAD_BUCKET = "${google_storage_bucket.public_website.name}"
+        UPLOAD_NAME = "index.html"
+        GOOGLE_APPLICATION_CREDENTIALS = "/srv/files/function-service-account.json"
     }
 }
