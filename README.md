@@ -1,11 +1,10 @@
 <!--
 
-nodemon -e go,html,css,js,svg -x "dotenv go run ./development/build.go"
-
 change cloudflare zone settings https://www.terraform.io/docs/providers/cloudflare/r/zone_settings_override.html
 add CV link + hosted
 add analytics?
 add mobile banner
+fix tabs styling on smaller screens
 
 https://github.com/golang-standards/project-layout
 
@@ -19,17 +18,23 @@ https://github.com/golang-standards/project-layout
 
 &nbsp;
 
-The website is generated every five minutes by a [Cloud Function](https://cloud.google.com/functions/) which uploads the result to a public [Cloud Storage Bucket](https://cloud.google.com/storage/) whose contents are served by [Cloudflare](https://www.cloudflare.com/). Each build fetches contents of [.config](./.config) to build a [GraphQL](https://graphql.org/) query for the [GitHub API](https://developer.github.com/v4/). This data is then used to execute the website [templates](./templates) and build the static output files.
+This website is generated every five minutes by a [Cloud Function](https://cloud.google.com/functions/) which uploads the result to a public [Cloud Storage Bucket](https://cloud.google.com/storage/) whose contents are served by [Cloudflare](https://www.cloudflare.com/). Each build fetches the contents of [.config](./.config) to build a [GraphQL](https://graphql.org/) query for the [GitHub API](https://developer.github.com/v4/). This data is then used to execute the website [templates](./templates) and build the static output files.
 
 This process means the website contents, like user icon and repo descriptions, will always be up-to-date, without impacting response time and scalability. It also makes it easy, fast and version-controlled to update the list of projects and contributions shown on the website.
 
 ## Development
 
 ```
-$ GRAPHQL_TOKEN="{github_api_token}" go run ./development/build.go
+$ go run ./development/build.go
 ```
 
-This will use local `.config` and output `index.html` in the project root.
+This command will output `index.html` in the project root and uses the local `.config` to fetch for data.
+
+After the initial build, the `./templates` directory is watched for changes. Manual rebuilds can be triggered by typing `.\n`.
+
+If a `.env` file exists in the project root, it will automatically be loaded.
+
+The `GRAPHQL_TOKEN` environment variable must be defined to access the GitHub API.
 
 ## Deployment
 
