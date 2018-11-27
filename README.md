@@ -4,7 +4,6 @@ change cloudflare zone settings https://www.terraform.io/docs/providers/cloudfla
 add CV link + hosted
 add analytics?
 add mobile banner
-fix tabs styling on smaller screens
 
 https://github.com/golang-standards/project-layout
 

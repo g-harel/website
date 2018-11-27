@@ -1,6 +1,6 @@
 {{template "styles/global.html"}}
 
-{{if first "components/tabs.html"}}
+{{if first "components/nav.html"}}
     <style>
         .nav {
             border-bottom: 1px solid var(--grey-light);
@@ -67,7 +67,7 @@
             var hash = document.location.hash;
 
             if (!isValidHash(hash)) {
-                document.location.hash = defaultHash;
+                window.history.replaceState(undefined, undefined, defaultHash);
                 // Because this function is listening to hash changes,
                 // the first invocation must not run if it reassigns
                 // the hash value.
@@ -96,7 +96,7 @@
         document.addEventListener("DOMContentLoaded", updateActive);
 
         if (!isValidHash(document.location.hash)) {
-            document.location.hash = defaultHash;
+            window.history.replaceState(undefined, undefined, defaultHash);
         }
     </script>
 {{end}}

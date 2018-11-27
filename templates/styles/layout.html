@@ -12,7 +12,7 @@
         .info-wrapper {
             background-color: var(--color-background);
             height: 100%;
-            padding-left: calc(50% - var(--width-page)/2);
+            padding-left: var(--gap-side);
             padding-right: var(--gap-card);
             padding-top: var(--gap-top);
             position: fixed;
@@ -20,20 +20,21 @@
             z-index: 1;
         }
 
-        .tabs-wrapper {
+        .nav-wrapper {
             background-color: var(--color-background);
-            padding-left: calc(50% - var(--width-page)/2 + var(--width-info) + 2*var(--gap-card));
+            left: calc(var(--width-info) + 2*var(--gap-card));
+            padding-left: calc(var(--gap-side));
             padding-top: calc(var(--gap-top) - var(--height-nav) + 1px);
             position: fixed;
-            width: var(--width-tabs);
+            width: var(--width-nav);
             z-index: 1;
         }
 
         .cards-wrapper {
             padding-bottom: calc(4*var(--gap-card));
-            padding-left: calc(50% - var(--width-page)/2 + var(--width-info) + 2*var(--gap-card));
+            padding-left: calc(var(--gap-side) + var(--width-info) + 2*var(--gap-card));
             padding-top: calc(var(--gap-top) + 2*var(--gap-card) + 1px);
-            width: var(--width-tabs);
+            width: var(--width-nav);
             z-index: 0;
         }
 
