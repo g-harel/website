@@ -1,9 +1,7 @@
 <!--
 
 change cloudflare zone settings https://www.terraform.io/docs/providers/cloudflare/r/zone_settings_override.html
-add CV link + hosted
-add analytics?
-add mobile banner
+add resume
 
 https://github.com/golang-standards/project-layout
 
@@ -53,11 +51,11 @@ _As of this writing (Nov 2018)_
 * _Unreleased version of [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) is required to allow non-node Cloud Function runtime. See [here](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) for installation instructions after building the provider from source._
 * _Project owner and terraform service account must be whitelisted for the go Cloud Function alpha._
 * _Cloud Scheduler resource must be managed manually because it is not yet supported in [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google)._
+* _[Default cloud function service account](https://cloud.google.com/functions/docs/concepts/iam#runtime_service_account) must have `Storage Object Admin` Role._
 
 ## Planned Improvements
 
 * Continuously `terraform apply` repository contents using [Cloud Build](https://cloud.google.com/cloud-build/)
-* Move source templates into storage bucket to avoid redeploying function on template change
 * Make styling responsive
 * Better secret management (possibly using [Vault](https://www.vaultproject.io/))
 

@@ -21,8 +21,14 @@ resource "google_pubsub_topic" "build_triggers" {
 
 data "archive_file" "build_function" {
     type = "zip"
-    source_dir = ".temp/build"
+    source_dir = "../functions"
     output_path = ".temp/build.zip"
+}
+
+data "archive_file" "build_function_templates" {
+    type = "zip"
+    source_dir = "../templates"
+    output_path = ".temp/templates.zip"
 }
 
 resource "google_storage_bucket" "functions" {
@@ -30,14 +36,20 @@ resource "google_storage_bucket" "functions" {
 }
 
 resource "google_storage_bucket_object" "build_function" {
+    bucket = "${google_storage_bucket.functions.name}"
     name   = "build.zip"
     source = "${data.archive_file.build_function.output_path}"
+}
+
+resource "google_storage_bucket_object" "build_function_templates" {
     bucket = "${google_storage_bucket.functions.name}"
+    name   = "templates.zip"
+    source = "${data.archive_file.build_function_templates.output_path}"
 }
 
 resource "google_cloudfunctions_function" "build" {
     # name used to recreate resource when source changes
-    name = "build-${substr(google_storage_bucket_object.build_function.md5hash, 0, 8)}"
+    name = "build-${substr(base64encode(google_storage_bucket_object.build_function.md5hash), 0, 8)}"
     source_archive_bucket = "${google_storage_bucket.functions.name}"
     source_archive_object = "${google_storage_bucket_object.build_function.name}"
 
@@ -54,12 +66,12 @@ resource "google_cloudfunctions_function" "build" {
 
     environment_variables = {
         CONFIG_SRC = "https://raw.githubusercontent.com/g-harel/website/master/.config"
-        TEMPLATE_DIR = "/srv/files/templates"
-        TEMPLATE_ENTRY = "entry.html"
         GRAPHQL_ENDPOINT = "https://api.github.com/graphql"
         GRAPHQL_TOKEN = "${file(".secret/github.token")}"
+        TEMPLATE_BUCKET = "${google_storage_bucket.functions.name}"
+        TEMPLATE_OBJECT = "${google_storage_bucket_object.build_function_templates.name}"
+        TEMPLATE_ENTRY = "entry.html"
         UPLOAD_BUCKET = "${google_storage_bucket.public_website.name}"
-        UPLOAD_NAME = "index.html"
-        GOOGLE_APPLICATION_CREDENTIALS = "/srv/files/function-service-account.json"
+        UPLOAD_OBJECT = "index.html"
     }
 }
