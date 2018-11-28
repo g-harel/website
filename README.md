@@ -1,6 +1,7 @@
 <!--
 
 add resume
+use kms (https://www.terraform.io/docs/providers/google/d/google_kms_secret.html)
 
 https://github.com/golang-standards/project-layout
 
