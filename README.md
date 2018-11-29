@@ -1,7 +1,6 @@
 <!--
 
 add resume
-use kms (https://www.terraform.io/docs/providers/google/d/google_kms_secret.html)
 
 https://github.com/golang-standards/project-layout
 
@@ -57,7 +56,6 @@ _As of this writing (Nov 2018)_
 
 * Continuously `terraform apply` repository contents using [Cloud Build](https://cloud.google.com/cloud-build/)
 * Make styling responsive
-* Better secret management using [KMS](https://cloud.google.com/kms/)
 
 ## License
 

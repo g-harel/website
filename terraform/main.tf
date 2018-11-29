@@ -11,7 +11,7 @@ provider "archive" {}
 
 provider "cloudflare" {
     email = "gabrielj.harel@gmail.com"
-    token = "${file(".secret/cloudflare.key")}"
+    token = "${data.google_kms_secret.cloudflare_key.plaintext}"
 }
 
 provider "google" {

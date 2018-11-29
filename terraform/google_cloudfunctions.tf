@@ -18,7 +18,7 @@ resource "google_cloudfunctions_function" "build" {
     environment_variables = {
         CONFIG_SRC = "https://raw.githubusercontent.com/g-harel/website/master/.config"
         GRAPHQL_ENDPOINT = "https://api.github.com/graphql"
-        GRAPHQL_TOKEN = "${file(".secret/github.token")}"
+        GRAPHQL_TOKEN = "${data.google_kms_secret.github_api_token.plaintext}"
         TEMPLATE_BUCKET = "${google_storage_bucket.functions.name}"
         TEMPLATE_OBJECT = "${google_storage_bucket_object.build_function_templates.name}"
         TEMPLATE_ENTRY = "entry.html"
