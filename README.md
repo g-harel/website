@@ -47,7 +47,6 @@ _deployment is not required for changes to `.config`_
 
 _As of this writing (Nov 2018)_
 
-* _Unreleased version of [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) is required to allow non-node Cloud Function runtime. See [here](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) for installation instructions after building the provider from source._
 * _Project owner and terraform service account must be whitelisted for the go Cloud Function alpha._
 * _Cloud Scheduler resource must be managed manually because it is not yet supported in [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google)._
 * _[Default cloud function service account](https://cloud.google.com/functions/docs/concepts/iam#runtime_service_account) must have `Storage Object Admin` Role._
