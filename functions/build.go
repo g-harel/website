@@ -18,7 +18,8 @@ import (
 )
 
 var env = struct {
-	ConfigSrc       string
+	ConfigBucket    string
+	ConfigObject    string
 	GraphQLEndpoint string
 	GraphQLToken    string
 	TemplateBucket  string
@@ -27,7 +28,8 @@ var env = struct {
 	UploadBucket    string
 	UploadObject    string
 }{
-	ConfigSrc:       os.Getenv("CONFIG_SRC"),
+	ConfigBucket:    os.Getenv("CONFIG_BUCKET"),
+	ConfigObject:    os.Getenv("CONFIG_OBJECT"),
 	GraphQLEndpoint: os.Getenv("GRAPHQL_ENDPOINT"),
 	GraphQLToken:    os.Getenv("GRAPHQL_TOKEN"),
 	TemplateBucket:  os.Getenv("TEMPLATE_BUCKET"),
@@ -45,21 +47,25 @@ func Build(ctx context.Context, _ interface{}) error {
 		Timeout: 10 * time.Second,
 	}
 
-	configReq, err := http.NewRequest("GET", env.ConfigSrc, nil)
+	storageClient, err := storage.NewClient(ctx)
 	if err != nil {
-		return fmt.Errorf("create remote config request: %v", err)
+		return fmt.Errorf("create storage client: %v", err)
 	}
-	configReq = configReq.WithContext(ctx)
 
-	configRes, err := httpClient.Do(configReq)
+	remoteConfig, err := storageClient.Bucket(env.ConfigBucket).Object(env.ConfigObject).NewReader(ctx)
 	if err != nil {
-		return fmt.Errorf("request for remote config: %v", err)
+		return fmt.Errorf("create remote config reader: %v", err)
 	}
 
 	configBody := &bytes.Buffer{}
-	_, err = io.Copy(configBody, configRes.Body)
+	_, err = io.Copy(configBody, remoteConfig)
 	if err != nil {
 		return fmt.Errorf("read remote config response: %v", err)
+	}
+
+	err = remoteConfig.Close()
+	if err != nil {
+		return fmt.Errorf("close remote config: %v", err)
 	}
 
 	config, err := (&website.Config{}).Parse(configBody.String())
@@ -93,11 +99,6 @@ func Build(ctx context.Context, _ interface{}) error {
 	data, err := (&website.Data{}).Parse(dataBody.String())
 	if err != nil {
 		return fmt.Errorf("parse received data: %v", err)
-	}
-
-	storageClient, err := storage.NewClient(ctx)
-	if err != nil {
-		return fmt.Errorf("create storage client: %v", err)
 	}
 
 	templates, err := storageClient.Bucket(env.TemplateBucket).Object(env.TemplateObject).NewReader(ctx)

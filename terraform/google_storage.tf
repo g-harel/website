@@ -21,6 +21,12 @@ resource "google_storage_bucket" "functions" {
     name = "functions-222818"
 }
 
+resource "google_storage_bucket_object" "build_config" {
+    bucket = "${google_storage_bucket.functions.name}"
+    name   = ".config"
+    source = "../.config"
+}
+
 resource "google_storage_bucket_object" "build_function" {
     bucket = "${google_storage_bucket.functions.name}"
     name   = "build.zip"
