@@ -17,16 +17,12 @@
         {{template "components/info.html" .}}
     </div>
     <div class="cards-wrapper">
-        <div class="projects">
-            {{range .Projects}}
-                {{template "components/project.html" .}}
-            {{end}}
-        </div>
-        <div class="contributions">
-            {{range .Contributions}}
-                {{template "components/contribution.html" .}}
-            {{end}}
-        </div>
+        {{range .Projects}}
+            {{template "components/project.html" .}}
+        {{end}}
+        {{range .Contributions}}
+            {{template "components/contribution.html" .}}
+        {{end}}
     </div>
     <script>
         // Page contents are only made visible after tabbed navigation has

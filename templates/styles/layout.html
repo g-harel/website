@@ -31,15 +31,14 @@
         }
 
         .cards-wrapper {
+            align-items: stretch;
+            display: flex;
+            flex-wrap: wrap;
             padding-bottom: calc(4*var(--gap-card));
             padding-left: calc(var(--gap-side) + var(--width-info) + 2*var(--gap-card));
             padding-top: calc(var(--gap-top) + 2*var(--gap-card) + 1px);
             width: var(--width-nav);
             z-index: 0;
-        }
-
-        .cards-wrapper > div:not(.hash-active) {
-            display: none;
         }
     </style>
 {{end}}
