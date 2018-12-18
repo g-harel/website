@@ -7,14 +7,10 @@ make responsive
 https://github.com/golang-standards/project-layout
 
  -->
+ 
+![diagram](https://user-images.githubusercontent.com/9319710/50181404-4aa58b80-02da-11e9-8d48-bf6a2c2e6f58.png)
 
 # [g.harel.page](https://g.harel.page)
-
-&nbsp;
-
-![diagram](https://user-images.githubusercontent.com/9319710/48919035-6c882b80-ee5e-11e8-87b2-4d15f4f8f866.png)
-
-&nbsp;
 
 The page(s) are generated every five minutes by a [Cloud Function](https://cloud.google.com/functions/) which uploads the result to a public [Cloud Storage Bucket](https://cloud.google.com/storage/) whose contents are served by [Cloudflare](https://www.cloudflare.com/). Each build uses the contents of [.config](./.config) to build a [GraphQL](https://graphql.org/) query for the [GitHub API](https://developer.github.com/v4/). This data is then used to execute the website [templates](./templates) and build the static output files.
 
