@@ -17,3 +17,5 @@ provider "google" {
     project = "website-222818"
     region = "northamerica-northeast1"
 }
+
+data "google_project" "project" {}

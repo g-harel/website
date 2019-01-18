@@ -1,5 +1,6 @@
 resource "google_cloudbuild_trigger" "master_branch" {
     trigger_template = {
+        project = "${data.google_project.project.project_id}"
         repo_name = "${google_sourcerepo_repository.website.name}"
         branch_name = "master"
         dir = "terraform"
