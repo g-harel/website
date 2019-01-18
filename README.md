@@ -1,20 +1,19 @@
 <!--
 
-add resume
-update diagram
+add resume?
 make responsive
 
 https://github.com/golang-standards/project-layout
 
  -->
- 
+
 ![diagram](https://user-images.githubusercontent.com/9319710/50181404-4aa58b80-02da-11e9-8d48-bf6a2c2e6f58.png)
 
 # [g.harel.page](https://g.harel.page)
 
 The page(s) are generated every five minutes by a [Cloud Function](https://cloud.google.com/functions/) which uploads the result to a public [Cloud Storage Bucket](https://cloud.google.com/storage/) whose contents are served by [Cloudflare](https://www.cloudflare.com/). Each build uses the contents of [.config](./.config) to build a [GraphQL](https://graphql.org/) query for the [GitHub API](https://developer.github.com/v4/). This data is then used to execute the website [templates](./templates) and build the static output files.
 
-This process means the website contents, like user icon and repo descriptions, will always be up-to-date, without impacting response time and scalability. It also makes it easy, fast and version-controlled to update the list of projects and contributions shown on the website.
+This process means the website contents, like user icon and repo descriptions, will always be up-to-date, without impacting response time. It also makes it easy, fast and version-controlled to update the list of projects and contributions shown on the website.
 
 ## Development
 
@@ -39,7 +38,6 @@ This project's resources are all managed using [Terraform](https://www.terraform
 
 _As of this writing (Nov 2018)_
 
-* _Project owner and cloudbuild service account must be whitelisted for the go Cloud Function alpha._
 * _Cloud Scheduler resource must be managed manually because it is not yet supported in [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google)._
 * _[Default cloud function service account](https://cloud.google.com/functions/docs/concepts/iam#runtime_service_account) must have `Storage Object Admin` Role._
 
