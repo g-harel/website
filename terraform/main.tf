@@ -18,4 +18,9 @@ provider "google" {
     region = "northamerica-northeast1"
 }
 
+provider "google-beta" {
+    project = "website-222818"
+    region = "northamerica-northeast1"
+}
+
 data "google_project" "project" {}
