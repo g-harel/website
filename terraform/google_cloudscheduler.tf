@@ -3,6 +3,7 @@ resource "google_cloud_scheduler_job" "trigger" {
 
     name     = "build-trigger"
     schedule = "*/5 * * * *"
+    region   = "us-central1"
 
     pubsub_target = {
         topic_name = "${google_pubsub_topic.build_triggers.name}"
