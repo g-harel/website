@@ -6,6 +6,6 @@ resource "google_cloud_scheduler_job" "trigger" {
 
     pubsub_target = {
         topic_name = "${google_pubsub_topic.build_triggers.name}"
-        data       = "{}"
+        data       = "${base64encode("{}")}"
     }
 }
