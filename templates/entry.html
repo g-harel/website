@@ -16,10 +16,12 @@
     <div class="info-wrapper">
         {{template "components/info.html" .}}
     </div>
-    <div class="cards-wrapper">
+    <div class="cards-wrapper projects">
         {{range .Projects}}
             {{template "components/project.html" .}}
         {{end}}
+    </div>
+    <div class="cards-wrapper contributions">
         {{range .Contributions}}
             {{template "components/contribution.html" .}}
         {{end}}
