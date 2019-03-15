@@ -44,5 +44,29 @@
         .cards-wrapper:not(.hash-active) {
             display: none;
         }
+
+        @media only screen and (max-width: 996px) {
+            html {
+                min-width: 0;
+            }
+
+            .info-wrapper {
+                margin: calc(3*var(--gap-card)) auto calc(2*var(--gap-card));
+                position: initial;
+                padding: var(--gap-card);
+            }
+
+            .nav-wrapper {
+                padding: 0;
+                position: initial;
+                width: 100vw;
+            }
+
+            .cards-wrapper {
+                box-sizing: border-box;
+                padding: var(--gap-card);
+                width: 100vw;
+            }
+        }
     </style>
 {{end}}

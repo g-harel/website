@@ -93,5 +93,15 @@
             transform: translate(0, 1px);
             vertical-align: text-bottom;
         }
+
+        @media only screen and (max-width: 996px) {
+            .card {
+                width: 100%;
+            }
+
+            .card:nth-of-type(2n) {
+                margin-left: 0;
+            }
+        }
     </style>
 {{end}}

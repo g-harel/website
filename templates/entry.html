@@ -10,11 +10,11 @@
     {{template "styles/layout.html"}}
 </head>
 <body>
-    <div class="nav-wrapper">
-        {{template "components/nav.html" .}}
-    </div>
     <div class="info-wrapper">
         {{template "components/info.html" .}}
+    </div>
+    <div class="nav-wrapper">
+        {{template "components/nav.html" .}}
     </div>
     <div class="cards-wrapper projects">
         {{range .Projects}}

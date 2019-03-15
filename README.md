@@ -1,12 +1,3 @@
-<!--
-
-add resume?
-make responsive
-
-https://github.com/golang-standards/project-layout
-
- -->
-
 ![diagram](https://user-images.githubusercontent.com/9319710/50181404-4aa58b80-02da-11e9-8d48-bf6a2c2e6f58.png)
 
 # [g.harel.page](https://g.harel.page)
@@ -39,10 +30,6 @@ This project's resources are all managed using [Terraform](https://www.terraform
 _As of this writing (Nov 2018)_
 
 * _[Default cloud function service account](https://cloud.google.com/functions/docs/concepts/iam#runtime_service_account) must have `Storage Object Admin` Role._
-
-## Planned Improvements
-
-* Make styling responsive
 
 ## License
 
