@@ -173,6 +173,7 @@ var query = `
 		}
 		description
 		url
+		homepageUrl
 		stargazers {
 			totalCount
 		}

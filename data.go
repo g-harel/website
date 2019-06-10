@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 // Data represents the combined response data from Config's query.
@@ -32,6 +33,7 @@ type ProjectData struct {
 		Login string `json:"login"`
 	} `json:"owner"`
 	Description string `json:"description"`
+	Homepage    string `json:"homepageUrl"`
 	URL         string `json:"url"`
 	Stargazers  struct {
 		Count int `json:"totalCount"`
@@ -110,6 +112,8 @@ func (d *Data) Parse(text string) (*Data, error) {
 		if err != nil {
 			return nil, fmt.Errorf("could not parse project data: %v", err)
 		}
+		project.Homepage = strings.TrimPrefix(project.Homepage, "https://")
+		project.Homepage = strings.TrimSuffix(project.Homepage, "/")
 		d.Projects = append(d.Projects, project)
 
 		index++

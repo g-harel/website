@@ -15,7 +15,10 @@
         {{.Name}}
     </a>
     <p class="description">
-        {{.Description}}
+        {{.Description}}&#32;&#32;
+        {{if ne .Homepage ""}}
+            <a href="https://{{.Homepage}}">{{.Homepage}}</a>
+        {{end}}
     </p>
     <div class="labels">
         {{$URL := .URL}}
