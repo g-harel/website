@@ -1,11 +1,11 @@
-resource "google_kms_key_ring" "master" {
-    name = "master-222818"
-    location = "northamerica-northeast1"
+data "google_kms_key_ring" "master" {
+  name     = "master-222818"
+  location = "northamerica-northeast1"
 }
 
-resource "google_kms_crypto_key" "master" {
-    name = "master-222818"
-    key_ring = "${google_kms_key_ring.master.id}"
+data "google_kms_crypto_key" "master" {
+  name     = "master-222818"
+  key_ring = "${data.google_kms_key_ring.master.id}"
 }
 
 
@@ -23,11 +23,11 @@ echo -n "my_secret_value" | gcloud kms encrypt \
 */
 
 data "google_kms_secret" "github_api_token" {
-    crypto_key = "${google_kms_crypto_key.master.id}"
-    ciphertext = "CiQAfiTmjjKuiVMOWmquTAA4NxJcmpWYiLtBaZoxvs2BBs+WqlgSUQDNbPzaRyz3TpPBhZoH0APDJZSPpeogk4dWg377d13civeUOv+2vqANY/vDIp4eXoCBdQ7TBysD70gF4bo7gPnuaXZV9nc1C5gevTFy2sBruw=="
+  crypto_key = "${data.google_kms_crypto_key.master.id}"
+  ciphertext = "CiQAfiTmjjKuiVMOWmquTAA4NxJcmpWYiLtBaZoxvs2BBs+WqlgSUQDNbPzaRyz3TpPBhZoH0APDJZSPpeogk4dWg377d13civeUOv+2vqANY/vDIp4eXoCBdQ7TBysD70gF4bo7gPnuaXZV9nc1C5gevTFy2sBruw=="
 }
 
 data "google_kms_secret" "cloudflare_key" {
-    crypto_key = "${google_kms_crypto_key.master.id}"
-    ciphertext = "CiQAfiTmjh82wX+zrkaJbdfRRmWcGM0NBCqoduJZG7DSbu+o0FkSTgDNbPzalo6xAgjobovm/EWqc7RIK27q0aRbY2MfvpygFvduYeQeMUVoGM5yvR+hp355YW/P0/mKIfvouwHi3MjVp1JhKOrA972wB/gFmQ=="
+  crypto_key = "${data.google_kms_crypto_key.master.id}"
+  ciphertext = "CiQAfiTmjh82wX+zrkaJbdfRRmWcGM0NBCqoduJZG7DSbu+o0FkSTgDNbPzalo6xAgjobovm/EWqc7RIK27q0aRbY2MfvpygFvduYeQeMUVoGM5yvR+hp355YW/P0/mKIfvouwHi3MjVp1JhKOrA972wB/gFmQ=="
 }
