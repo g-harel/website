@@ -9,11 +9,20 @@ import (
 	"strings"
 )
 
+const (
+	expectedSectionCount      = 4
+	loginSectionIndex         = 0
+	projectsSectionIndex      = 1
+	contributionsSectionIndex = 2
+	creationsSectionIndex     = 3
+)
+
 // Config represents website configuration settings.
 type Config struct {
 	Login         string
 	Projects      []*ProjectConfig
 	Contributions []*ContributionConfig
+	Creations     []*CreationConfig
 }
 
 // ProjectConfig represents a project config item.
@@ -30,28 +39,39 @@ type ContributionConfig struct {
 	Issue int
 }
 
+// CreationConfig represents a creation config item.
+type CreationConfig struct {
+	ImageURL string
+}
+
 // Parse populates the fields of its receiver with unmarshalled contents from the raw config.
 func (c *Config) Parse(text string) (*Config, error) {
 	sections := strings.Split(strings.TrimSpace(text), "\n\n")
-	if len(sections) < 3 {
-		return nil, fmt.Errorf("missing config sections (1/%v of login, projects, config)", len(sections))
+	if len(sections) < expectedSectionCount {
+		return nil, fmt.Errorf("missing config sections (%v/%v of login, projects, contributions, creations)", len(sections), expectedSectionCount)
 	}
-	if len(sections) > 3 {
+	if len(sections) > expectedSectionCount {
 		return nil, fmt.Errorf("malformed config, too many sections (%v)", len(sections))
 	}
 
-	c.Login = string(sections[0])
+	c.Login = sections[loginSectionIndex]
 	c.Projects = []*ProjectConfig{}
 	c.Contributions = []*ContributionConfig{}
+	c.Creations = []*CreationConfig{}
 
 	projects := []string{}
-	if sections[1] != "" {
-		projects = strings.Split(sections[1], "\n")
+	if sections[projectsSectionIndex] != "" {
+		projects = strings.Split(sections[projectsSectionIndex], "\n")
 	}
 
 	contributions := []string{}
-	if sections[2] != "" {
-		contributions = strings.Split(sections[2], "\n")
+	if sections[contributionsSectionIndex] != "" {
+		contributions = strings.Split(sections[contributionsSectionIndex], "\n")
+	}
+
+	creations := []string{}
+	if sections[creationsSectionIndex] != "" {
+		creations = strings.Split(sections[creationsSectionIndex], "\n")
 	}
 
 	for _, project := range projects {
@@ -92,6 +112,12 @@ func (c *Config) Parse(text string) (*Config, error) {
 			Name:  string(name[1]),
 			Pull:  pull,
 			Issue: issue,
+		})
+	}
+
+	for _, creation := range creations {
+		c.Creations = append(c.Creations, &CreationConfig{
+			ImageURL: creation,
 		})
 	}
 
