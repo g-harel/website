@@ -69,7 +69,7 @@
             if (!hash) {
                 return false;
             }
-            if ([defaultHash, "#contributions"].indexOf(hash) === -1) {
+            if ([defaultHash, "#contributions", "#creations"].indexOf(hash) === -1) {
                 return false;
             }
             return true;
@@ -121,5 +121,9 @@
     <a class="item contributions" href="#contributions">
         Contributions
         <span class="counter">{{len .Contributions}}</span>
+    </a>
+    <a class="item creations" href="#creations">
+        Creations
+        <span class="counter">{{len .Creations}}</span>
     </a>
 </div>

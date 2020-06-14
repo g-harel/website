@@ -26,6 +26,11 @@
             {{template "components/contribution.html" .}}
         {{end}}
     </div>
+    <div class="cards-wrapper creations">
+        {{range .Creations}}
+            {{template "components/creation.html" .}}
+        {{end}}
+    </div>
     <script>
         // Page contents are only made visible after tabbed navigation has
         // loaded to prevent flash of empty content.

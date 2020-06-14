@@ -12,6 +12,7 @@ type Data struct {
 	User          *UserData
 	Projects      []*ProjectData
 	Contributions []*ContributionData
+	Creations     []*CreationData
 }
 
 // UserData represents the user data from Config's query.
@@ -62,6 +63,11 @@ type ContributionData struct {
 		Number int    `json:"number"`
 		URL    string `json:"url"`
 	} `json:"issue"`
+}
+
+// CreationData represents the creation data from Config.
+type CreationData struct {
+	ImageURL string `json:"imageUrl"`
 }
 
 // GQLResponse represents a a generic GraphQL json response.

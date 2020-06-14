@@ -150,6 +150,13 @@ func Build() error {
 		return fmt.Errorf("could not parse received data: %v", err)
 	}
 
+	// TODO add to build function too.
+	for i := 0; i < len(config.Creations); i++ {
+		data.Creations = append(data.Creations, &website.CreationData{
+			ImageURL: config.Creations[i].ImageURL,
+		})
+	}
+
 	output, err := website.Render(env.TemplateDir, env.TemplateEntry, data)
 	if err != nil {
 		return fmt.Errorf("could not render templates: %v", err)
