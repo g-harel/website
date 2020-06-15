@@ -41,6 +41,7 @@ type ContributionConfig struct {
 
 // CreationConfig represents a creation config item.
 type CreationConfig struct {
+	Title    string
 	ImageURL string
 }
 
@@ -87,7 +88,7 @@ func (c *Config) Parse(text string) (*Config, error) {
 	}
 
 	for _, contribution := range contributions {
-		parts := strings.Split(contribution, " ")
+		parts := splitRepeated(contribution, " ")
 		if len(parts) != 3 {
 			return nil, fmt.Errorf("malformed contribution config: \"%v\"", contribution)
 		}
@@ -116,12 +117,29 @@ func (c *Config) Parse(text string) (*Config, error) {
 	}
 
 	for _, creation := range creations {
+		parts := splitRepeated(creation, " ")
+		if len(parts) < 2 {
+			return nil, fmt.Errorf("malformed creation config: \"%v\"", creation)
+		}
+
 		c.Creations = append(c.Creations, &CreationConfig{
-			ImageURL: creation,
+			Title:    strings.Join(parts[:len(parts)-1], " "),
+			ImageURL: parts[len(parts)-1],
 		})
 	}
 
 	return c, nil
+}
+
+func splitRepeated(s, sep string) []string {
+	raw := strings.Split(s, sep)
+	clean := []string{}
+	for i := 0; i < len(raw); i++ {
+		if raw[i] != "" {
+			clean = append(clean, raw[i])
+		}
+	}
+	return clean
 }
 
 // Query generates a GraphQL query string from its receiver's fields.

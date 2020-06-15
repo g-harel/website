@@ -47,6 +47,9 @@ func main() {
 	}
 	defer watcher.Close()
 
+	// Watch for config changes.
+	watcher.Add(env.ConfigPath)
+
 	// Recursively walk the templates directory to watch the entire tree.
 	err = filepath.Walk(env.TemplateDir, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
@@ -65,7 +68,7 @@ func main() {
 	if err != nil {
 		fatal("could not recursively watch files in \"%v\": %v", env.TemplateDir, err)
 	}
-	fmt.Printf("watching \"%s\"\n", env.TemplateDir)
+	fmt.Printf("watching \"%s\" and \"%s\"\n", env.TemplateDir, env.ConfigPath)
 
 	// Poll rebuild variable to batch multiple watcher events.
 	rebuild := true
@@ -153,6 +156,7 @@ func Build() error {
 	// TODO add to build function too.
 	for i := 0; i < len(config.Creations); i++ {
 		data.Creations = append(data.Creations, &website.CreationData{
+			Title:    config.Creations[i].Title,
 			ImageURL: config.Creations[i].ImageURL,
 		})
 	}

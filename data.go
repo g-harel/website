@@ -67,6 +67,7 @@ type ContributionData struct {
 
 // CreationData represents the creation data from Config.
 type CreationData struct {
+	Title    string `json:"title"`
 	ImageURL string `json:"imageUrl"`
 }
 
