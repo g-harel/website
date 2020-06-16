@@ -67,8 +67,9 @@ type ContributionData struct {
 
 // CreationData represents the creation data from Config.
 type CreationData struct {
-	Title    string `json:"title"`
-	ImageURL string `json:"imageUrl"`
+	Title           string `json:"title"`
+	ImageURL        string `json:"imageUrl"`
+	BackgroundColor string `json:"backgroundColor"`
 }
 
 // GQLResponse represents a a generic GraphQL json response.

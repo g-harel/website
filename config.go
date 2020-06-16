@@ -41,8 +41,9 @@ type ContributionConfig struct {
 
 // CreationConfig represents a creation config item.
 type CreationConfig struct {
-	Title    string
-	ImageURL string
+	Title           string
+	ImageURL        string
+	BackgroundColor string
 }
 
 // Parse populates the fields of its receiver with unmarshalled contents from the raw config.
@@ -118,13 +119,14 @@ func (c *Config) Parse(text string) (*Config, error) {
 
 	for _, creation := range creations {
 		parts := splitRepeated(creation, " ")
-		if len(parts) < 2 {
+		if len(parts) < 3 {
 			return nil, fmt.Errorf("malformed creation config: \"%v\"", creation)
 		}
 
 		c.Creations = append(c.Creations, &CreationConfig{
-			Title:    strings.Join(parts[:len(parts)-1], " "),
-			ImageURL: parts[len(parts)-1],
+			Title:           strings.Join(parts[:len(parts)-2], " "),
+			ImageURL:        parts[len(parts)-1],
+			BackgroundColor: parts[len(parts)-2],
 		})
 	}
 

@@ -156,8 +156,9 @@ func Build() error {
 	// TODO add to build function too.
 	for i := 0; i < len(config.Creations); i++ {
 		data.Creations = append(data.Creations, &website.CreationData{
-			Title:    config.Creations[i].Title,
-			ImageURL: config.Creations[i].ImageURL,
+			Title:           config.Creations[i].Title,
+			ImageURL:        config.Creations[i].ImageURL,
+			BackgroundColor: config.Creations[i].BackgroundColor,
 		})
 	}
 
