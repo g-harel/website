@@ -116,6 +116,14 @@ func Build(ctx context.Context, _ interface{}) error {
 		return fmt.Errorf("close remote templates: %v", err)
 	}
 
+	for i := 0; i < len(config.Creations); i++ {
+		data.Creations = append(data.Creations, &website.CreationData{
+			Title:           config.Creations[i].Title,
+			ImageURL:        config.Creations[i].ImageURL,
+			BackgroundColor: config.Creations[i].BackgroundColor,
+		})
+	}
+
 	output, err := website.Render(templateDir, env.TemplateEntry, data)
 	if err != nil {
 		return fmt.Errorf("render templates: %v", err)

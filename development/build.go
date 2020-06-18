@@ -153,7 +153,6 @@ func Build() error {
 		return fmt.Errorf("could not parse received data: %v", err)
 	}
 
-	// TODO add to build function too.
 	for i := 0; i < len(config.Creations); i++ {
 		data.Creations = append(data.Creations, &website.CreationData{
 			Title:           config.Creations[i].Title,
