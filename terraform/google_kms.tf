@@ -5,7 +5,7 @@ data "google_kms_key_ring" "master" {
 
 data "google_kms_crypto_key" "master" {
   name     = "master-222818"
-  key_ring = "${data.google_kms_key_ring.master.id}"
+  key_ring = "${data.google_kms_key_ring.master.self_link}"
 }
 
 
