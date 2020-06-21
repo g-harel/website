@@ -9,7 +9,7 @@ provider "archive" {}
 
 provider "cloudflare" {
   email = "gabrielj.harel@gmail.com"
-  api_key = data.google_kms_secret.cloudflare_key.plaintext
+  api_token = data.google_kms_secret.cloudflare_token.plaintext
 }
 
 provider "google" {

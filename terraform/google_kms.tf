@@ -1,11 +1,11 @@
-resource "google_kms_key_ring" "master" {
-  name     = "master-222818"
+resource "google_kms_key_ring" "secrets" {
+  name     = "secrets"
   location = "northamerica-northeast1"
 }
 
-resource "google_kms_crypto_key" "master" {
-  name     = "master-222818"
-  key_ring = google_kms_key_ring.master.self_link
+resource "google_kms_crypto_key" "secrets" {
+  name     = "secrets"
+  key_ring = google_kms_key_ring.secrets.self_link
 
   lifecycle {
     prevent_destroy = true
@@ -17,8 +17,8 @@ resource "google_kms_crypto_key" "master" {
 echo -n "my_secret_value" | gcloud kms encrypt \
     --project=website-222818 \
     --location=northamerica-northeast1 \
-    --keyring=master-222818 \
-    --key=master-222818 \
+    --keyring=secrets \
+    --key=secrets \
     --plaintext-file - \
     --ciphertext-file - \
     | base64 -w 0
@@ -26,11 +26,11 @@ echo -n "my_secret_value" | gcloud kms encrypt \
 */
 
 data "google_kms_secret" "github_api_token" {
-  crypto_key = google_kms_crypto_key.master.self_link
-  ciphertext = "CiQAfiTmjjKuiVMOWmquTAA4NxJcmpWYiLtBaZoxvs2BBs+WqlgSUQDNbPzaRyz3TpPBhZoH0APDJZSPpeogk4dWg377d13civeUOv+2vqANY/vDIp4eXoCBdQ7TBysD70gF4bo7gPnuaXZV9nc1C5gevTFy2sBruw=="
+  crypto_key = google_kms_crypto_key.secrets.self_link
+  ciphertext = "CiQA3sn5Bw/1CZ2A0GFd3pKAKoZSIC1zjk1+leIjOc9sLOduWRoSUgA21SmU5cO7cd2VGcXUkaGptOalm+ILXOcFiur6loOk9cTZzzjE6T0K4EvlkXWPgY3E8oSaGs+R+mzx0mE8T8XqXx0qNZpTnKpWAFFABbvumhs="
 }
 
-data "google_kms_secret" "cloudflare_key" {
-  crypto_key = google_kms_crypto_key.master.self_link
-  ciphertext = "CiQAfiTmjrSVoMnTwgR3JSi8yBrNDmPUF8gx1YGAGzOt9AwJBYcSUQBhQX3zHT0chIjlxgwUOLCyoCDXUmmfS0Yp1jdugh7JI/kaWQv2GxjxmjrXNmbfYBPRyAs4ozz8GozMBiwDye9bmYEa1v9E39FDHK96Dd8Yfw=="
+data "google_kms_secret" "cloudflare_token" {
+  crypto_key = google_kms_crypto_key.secrets.self_link
+  ciphertext = "CiQA3sn5Bwm7o6Y9VeaMAbZMnNH8SwCLXZ95/IeRvVA7oOj6JAoSUAA21SmUgg30UfIThOJu+vK93zRcz/5tUP7jEwPv5BUpDp1a9u/dJwJ6zW5aE2ekQfPoZ++rkAnj0ErvNHpYUfKoTcdWPJglmN6L2eCVpKx3"
 }
