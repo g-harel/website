@@ -6,8 +6,9 @@
 *.test
 *.out
 
-.terraform
 .env
+.temp
+.terraform
 index.html
 terraform/.*
 terraform/*.backup
