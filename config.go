@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -48,7 +49,11 @@ type CreationConfig struct {
 
 // Parse populates the fields of its receiver with unmarshalled contents from the raw config.
 func (c *Config) Parse(text string) (*Config, error) {
-	sections := strings.Split(strings.TrimSpace(text), "\n\n")
+	// Remove comments.
+	commentPattern := regexp.MustCompile("\n//[^\n]*")
+	simplifiedText := commentPattern.ReplaceAllString(text, "")
+
+	sections := strings.Split(strings.TrimSpace(simplifiedText), "\n\n")
 	if len(sections) < expectedSectionCount {
 		return nil, fmt.Errorf("missing config sections (%v/%v of login, projects, contributions, creations)", len(sections), expectedSectionCount)
 	}
