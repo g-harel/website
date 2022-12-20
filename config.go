@@ -50,7 +50,7 @@ type CreationConfig struct {
 // Parse populates the fields of its receiver with unmarshalled contents from the raw config.
 func (c *Config) Parse(text string) (*Config, error) {
 	// Remove comments.
-	commentPattern := regexp.MustCompile("\n//[^\n]*")
+	commentPattern := regexp.MustCompile("\n#[^\n]*")
 	simplifiedText := commentPattern.ReplaceAllString(text, "")
 
 	sections := strings.Split(strings.TrimSpace(simplifiedText), "\n\n")
