@@ -26,4 +26,10 @@ resource "google_cloudfunctions_function" "build" {
     UPLOAD_BUCKET    = google_storage_bucket.public_website.name
     UPLOAD_OBJECT    = "index.html"
   }
+
+  lifecycle {
+    replace_triggered_by  = [
+      google_storage_bucket_object.sourcecode
+    ]
+  }
 }
