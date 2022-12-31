@@ -1,6 +1,6 @@
 resource "google_cloudfunctions_function" "build" {
   # name used to recreate resource when source changes
-  name                  = "build-${substr(base64encode(google_storage_bucket_object.build_function.md5hash), 0, 8)}"
+  name                  = "build-${substr(base64encode(google_storage_bucket_object.build_function.md5hash), 0, 16)}"
   source_archive_bucket = google_storage_bucket.functions.name
   source_archive_object = google_storage_bucket_object.build_function.name
 
@@ -25,11 +25,5 @@ resource "google_cloudfunctions_function" "build" {
     TEMPLATE_ENTRY   = "entry.html"
     UPLOAD_BUCKET    = google_storage_bucket.public_website.name
     UPLOAD_OBJECT    = "index.html"
-  }
-
-  lifecycle {
-    replace_triggered_by  = [
-      google_storage_bucket_object.sourcecode
-    ]
   }
 }
