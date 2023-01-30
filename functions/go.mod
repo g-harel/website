@@ -4,5 +4,5 @@ go 1.14
 
 require (
 	cloud.google.com/go v0.40.0
-	github.com/g-harel/website v0.0.0-20200628030741-82f31b61c1ba
+	github.com/g-harel/website v0.0.0-20230129053604-4861cce2d74b
 )

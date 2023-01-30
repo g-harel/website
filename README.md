@@ -26,6 +26,7 @@ This project's resources are all managed using [Terraform](https://www.terraform
 
 * A [Source Repository](https://cloud.google.com/source-repositories) must be connected to the GitHub project to act as a trigger for [Cloud Build](https://cloud.google.com/cloud-build).
 * [Cloud Build](https://cloud.google.com/cloud-build)'s [Terraform](https://www.terraform.io) build step requires a [terraform cloud builder image](https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/terraform) available in the project's [Container Registry](https://cloud.google.com/container-registry). Instructions available [here](https://github.com/GoogleCloudPlatform/cloud-builders-community#build-the-build-step-from-source).
+* `./scripts/update-function-deps.sh` needs to be run to publish changes outside of the `functions` directory.
 
 _As of this writing (Nov 2018)_
 
