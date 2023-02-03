@@ -5,7 +5,7 @@ resource "google_cloudfunctions_function" "build" {
   source_archive_object = google_storage_bucket_object.build_function.name
 
   region              = "us-east1"
-  runtime             = "go111"
+  runtime             = "go119"
   available_memory_mb = 128
   entry_point         = "Build"
   timeout             = 30
