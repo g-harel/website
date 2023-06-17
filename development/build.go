@@ -41,6 +41,10 @@ func fatal(format string, a ...interface{}) {
 }
 
 func main() {
+	if env.GraphQLToken == "" {
+		fatal("missing GRAPHQL_TOKEN")
+	}
+
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		fatal("could not create file watcher: %s", err)
