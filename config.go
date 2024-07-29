@@ -11,11 +11,11 @@ import (
 )
 
 const (
-	expectedSectionCount      = 4
+	expectedSectionCount      = 6 // TODO(2024-07-29): use additional sections.
 	loginSectionIndex         = 0
 	projectsSectionIndex      = 1
 	contributionsSectionIndex = 2
-	creationsSectionIndex     = 3
+	keyboardsSectionIndex     = 3
 )
 
 // Config represents website configuration settings.
@@ -23,7 +23,7 @@ type Config struct {
 	Login         string
 	Projects      []*ProjectConfig
 	Contributions []*ContributionConfig
-	Creations     []*CreationConfig
+	Keyboards     []*CreationConfig
 }
 
 // ProjectConfig represents a project config item.
@@ -58,13 +58,13 @@ func (c *Config) Parse(text string) (*Config, error) {
 		return nil, fmt.Errorf("missing config sections (%v/%v of login, projects, contributions, creations)", len(sections), expectedSectionCount)
 	}
 	if len(sections) > expectedSectionCount {
-		return nil, fmt.Errorf("malformed config, too many sections (%v)", len(sections))
+		return nil, fmt.Errorf("malformed config, too many sections (%v > %v)", len(sections), expectedSectionCount)
 	}
 
 	c.Login = sections[loginSectionIndex]
 	c.Projects = []*ProjectConfig{}
 	c.Contributions = []*ContributionConfig{}
-	c.Creations = []*CreationConfig{}
+	c.Keyboards = []*CreationConfig{}
 
 	projects := []string{}
 	if sections[projectsSectionIndex] != "" {
@@ -76,9 +76,9 @@ func (c *Config) Parse(text string) (*Config, error) {
 		contributions = strings.Split(sections[contributionsSectionIndex], "\n")
 	}
 
-	creations := []string{}
-	if sections[creationsSectionIndex] != "" {
-		creations = strings.Split(sections[creationsSectionIndex], "\n")
+	keyboards := []string{}
+	if sections[keyboardsSectionIndex] != "" {
+		keyboards = strings.Split(sections[keyboardsSectionIndex], "\n")
 	}
 
 	for _, project := range projects {
@@ -122,13 +122,13 @@ func (c *Config) Parse(text string) (*Config, error) {
 		})
 	}
 
-	for _, creation := range creations {
-		parts := splitRepeated(creation, " ")
+	for _, keyboard := range keyboards {
+		parts := splitRepeated(keyboard, " ")
 		if len(parts) < 3 {
-			return nil, fmt.Errorf("malformed creation config: \"%v\"", creation)
+			return nil, fmt.Errorf("malformed creation config: \"%v\"", keyboard)
 		}
 
-		c.Creations = append(c.Creations, &CreationConfig{
+		c.Keyboards = append(c.Keyboards, &CreationConfig{
 			Title:           strings.Join(parts[:len(parts)-2], " "),
 			ImageURL:        parts[len(parts)-1],
 			BackgroundColor: parts[len(parts)-2],
