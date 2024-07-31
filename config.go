@@ -45,6 +45,7 @@ type CreationConfig struct {
 	Title           string
 	ImageURL        string
 	BackgroundColor string
+	Link            string
 }
 
 // Parse populates the fields of its receiver with unmarshalled contents from the raw config.
@@ -123,15 +124,23 @@ func (c *Config) Parse(text string) (*Config, error) {
 	}
 
 	for _, keyboard := range keyboards {
-		parts := splitRepeated(keyboard, " ")
-		if len(parts) < 3 {
+		if !strings.Contains(keyboard, "|") {
+			return nil, fmt.Errorf("creation missing separator: \"%v\"", keyboard)
+		}
+		sections := splitRepeated(keyboard, "|")
+		if len(sections) != 2 {
 			return nil, fmt.Errorf("malformed creation config: \"%v\"", keyboard)
+		}
+		metadata := splitRepeated(sections[1], " ")
+		if len(metadata) != 3 {
+			return nil, fmt.Errorf("missing creation metadata: \"%v\"", keyboard)
 		}
 
 		c.Keyboards = append(c.Keyboards, &CreationConfig{
-			Title:           strings.Join(parts[:len(parts)-2], " "),
-			ImageURL:        parts[len(parts)-1],
-			BackgroundColor: parts[len(parts)-2],
+			Title:           strings.TrimSpace(sections[0]),
+			ImageURL:        metadata[1],
+			BackgroundColor: metadata[0],
+			Link:            metadata[2],
 		})
 	}
 

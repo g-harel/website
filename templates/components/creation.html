@@ -2,5 +2,6 @@
 {{template "styles/card.html"}}
 
 <div class="card full" style="background-color: {{.BackgroundColor}}">
-    <img src="{{.ImageURL}}" alt="{{.Title}}" />
+    <!-- TODO(2024-07-30): wrap image in <a>. -->
+    <img src="{{.ImageURL}}" alt="{{.Title}}" data:link="{{.Link}}" />
 </div>

@@ -70,6 +70,7 @@ type CreationData struct {
 	Title           string `json:"title"`
 	ImageURL        string `json:"imageUrl"`
 	BackgroundColor string `json:"backgroundColor"`
+	Link            string `json:"link"`
 }
 
 // GQLResponse represents a a generic GraphQL json response.

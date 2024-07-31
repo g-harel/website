@@ -116,11 +116,12 @@ func Build(ctx context.Context, _ interface{}) error {
 		return fmt.Errorf("close remote templates: %v", err)
 	}
 
-	for i := 0; i < len(config.Creations); i++ {
-		data.Creations = append(data.Creations, &website.CreationData{
-			Title:           config.Creations[i].Title,
-			ImageURL:        config.Creations[i].ImageURL,
-			BackgroundColor: config.Creations[i].BackgroundColor,
+	for i := 0; i < len(config.Keyboards); i++ {
+		data.Keyboards = append(data.Keyboards, &website.CreationData{
+			Title:           config.Keyboards[i].Title,
+			ImageURL:        config.Keyboards[i].ImageURL,
+			BackgroundColor: config.Keyboards[i].BackgroundColor,
+			Link:            config.Keyboards[i].Link,
 		})
 	}
 

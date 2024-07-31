@@ -162,6 +162,7 @@ func Build() error {
 			Title:           config.Keyboards[i].Title,
 			ImageURL:        config.Keyboards[i].ImageURL,
 			BackgroundColor: config.Keyboards[i].BackgroundColor,
+			Link:            config.Keyboards[i].Link,
 		})
 	}
 
