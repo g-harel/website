@@ -22,7 +22,7 @@ The `GRAPHQL_TOKEN` environment variable must be defined to access the GitHub AP
 
 ## Deployment
 
-To publish Go dependency changes outside the `./functions` directory, commit/push the changes and run ./scripts/update-function-deps.sh`.
+To publish Go dependency changes outside the `./functions` directory, commit/push the changes and run `./scripts/update-function-deps.sh`.
 
 This project's resources are all managed using [Terraform](https://www.terraform.io). Any change to the main branch will automatically be applied (using [Cloud Build](https://cloud.google.com/cloud-build)). However, some initial manual setup is required:
 

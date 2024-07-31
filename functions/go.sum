@@ -6,8 +6,8 @@ cloud.google.com/go v0.40.0/go.mod h1:Tk58MuI9rbLMKlAjeO/bDnteAx7tX2gJIXw4T5Jwlr
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
-github.com/g-harel/website v0.0.0-20230617232549-ee4b4d1a67df h1:YYuptpf3AHsKeX4Xyi63FzzzQEqomcexLrdBtRuY7HY=
-github.com/g-harel/website v0.0.0-20230617232549-ee4b4d1a67df/go.mod h1:EBgJJe6b1KqmCGONY/ih3DRiamMJG2R++qlvsyS82ag=
+github.com/g-harel/website v0.0.0-20240729233133-2fd965ec5125 h1:1Q/bruGr5JSbbpx+7NDeOtsGIxJ0DKcXbH2ITvdnThk=
+github.com/g-harel/website v0.0.0-20240729233133-2fd965ec5125/go.mod h1:EBgJJe6b1KqmCGONY/ih3DRiamMJG2R++qlvsyS82ag=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
