@@ -1,7 +1,18 @@
 {{template "styles/global.html"}}
 {{template "styles/card.html"}}
 
+
+{{if first "components/creation.html"}}
+    <style>
+        .card.full > a {
+            font-size: 0;
+        }
+    </style>
+{{end}}
+
 <div class="card full" style="background-color: {{.BackgroundColor}}">
     <!-- TODO(2024-07-30): wrap image in <a>. -->
-    <img src="{{.ImageURL}}" alt="{{.Title}}" data:link="{{.Link}}" />
+    <a href="{{.Link}}" target="_blank">
+        <img src="{{.ImageURL}}" alt="{{.Title}}" />
+    </a>
 </div>
