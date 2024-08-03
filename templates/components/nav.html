@@ -69,7 +69,13 @@
             if (!hash) {
                 return false;
             }
-            if ([defaultHash, "#contributions", "#creations"].indexOf(hash) === -1) {
+            if ([
+                    defaultHash,
+                    "#contributions",
+                    "#keyboards", 
+                    "#illustrations",
+                    "#woodworking"
+                ].indexOf(hash) === -1) {
                 return false;
             }
             return true;
@@ -122,8 +128,16 @@
         Contributions
         <span class="counter">{{len .Contributions}}</span>
     </a>
-    <a class="item creations" href="#creations">
+    <a class="item keyboards" href="#keyboards">
         Keyboards
         <span class="counter">{{len .Keyboards}}</span>
+    </a>
+    <a class="item illustrations" href="#illustrations">
+        Illustrations
+        <span class="counter">{{len .Illustrations}}</span>
+    </a>
+    <a class="item woodworking" href="#woodworking">
+        Woodworking
+        <span class="counter">{{len .Woodworking}}</span>
     </a>
 </div>

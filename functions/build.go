@@ -124,6 +124,22 @@ func Build(ctx context.Context, _ interface{}) error {
 			Link:            config.Keyboards[i].Link,
 		})
 	}
+	for i := 0; i < len(config.Illustrations); i++ {
+		data.Illustrations = append(data.Illustrations, &website.CreationData{
+			Title:           config.Illustrations[i].Title,
+			ImageURL:        config.Illustrations[i].ImageURL,
+			BackgroundColor: config.Illustrations[i].BackgroundColor,
+			Link:            config.Illustrations[i].Link,
+		})
+	}
+	for i := 0; i < len(config.Woodworking); i++ {
+		data.Woodworking = append(data.Woodworking, &website.CreationData{
+			Title:           config.Woodworking[i].Title,
+			ImageURL:        config.Woodworking[i].ImageURL,
+			BackgroundColor: config.Woodworking[i].BackgroundColor,
+			Link:            config.Woodworking[i].Link,
+		})
+	}
 
 	output, err := website.Render(templateDir, env.TemplateEntry, data)
 	if err != nil {

@@ -26,8 +26,18 @@
             {{template "components/contribution.html" .}}
         {{end}}
     </div>
-    <div class="cards-wrapper creations">
+    <div class="cards-wrapper keyboards">
         {{range .Keyboards}}
+            {{template "components/creation.html" .}}
+        {{end}}
+    </div>
+    <div class="cards-wrapper illustrations">
+        {{range .Illustrations}}
+            {{template "components/creation.html" .}}
+        {{end}}
+    </div>
+    <div class="cards-wrapper woodworking">
+        {{range .Woodworking}}
             {{template "components/creation.html" .}}
         {{end}}
     </div>
