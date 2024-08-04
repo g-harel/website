@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	cloud.google.com/go v0.40.0
-	github.com/g-harel/website v0.0.0-20240731042115-66bff3005823
+	github.com/g-harel/website v0.0.0-20240803042631-d3340f0a7fc0
 )
 
 require (

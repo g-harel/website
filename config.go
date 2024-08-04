@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	expectedSectionCount      = 6 // TODO(2024-07-29): use additional sections.
+	expectedSectionCount      = 6
 	loginSectionIndex         = 0
 	projectsSectionIndex      = 1
 	contributionsSectionIndex = 2
