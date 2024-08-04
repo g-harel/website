@@ -22,12 +22,13 @@ const (
 
 // Config represents website configuration settings.
 type Config struct {
-	Login         string
-	Projects      []*ProjectConfig
-	Contributions []*ContributionConfig
-	Keyboards     []*CreationConfig
-	Illustrations []*CreationConfig
-	Woodworking   []*CreationConfig
+	GitHubLogin     string
+	InstagramHandle string
+	Projects        []*ProjectConfig
+	Contributions   []*ContributionConfig
+	Keyboards       []*CreationConfig
+	Illustrations   []*CreationConfig
+	Woodworking     []*CreationConfig
 }
 
 // ProjectConfig represents a project config item.
@@ -66,7 +67,9 @@ func (c *Config) Parse(text string) (*Config, error) {
 		return nil, fmt.Errorf("malformed config, too many sections (%v > %v)", len(sections), expectedSectionCount)
 	}
 
-	c.Login = sections[loginSectionIndex]
+	loginLines := strings.Split(sections[loginSectionIndex], "\n")
+	c.GitHubLogin = loginLines[0]
+	c.InstagramHandle = loginLines[1]
 
 	c.Projects = []*ProjectConfig{}
 	projects := []string{}
@@ -211,7 +214,7 @@ func (c *Config) Query() ([]byte, error) {
 // GraphQL query template sent to GitHub api.
 var query = `
 	query {
-		user(login: "{{.Login}}") {
+		user(login: "{{.GitHubLogin}}") {
 			avatarUrl
 			email
 			bio
