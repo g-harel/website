@@ -3,6 +3,12 @@ terraform {
     bucket = "tf-state-222818"
     prefix = "terraform/state"
   }
+
+  required_providers {
+    cloudflare = {
+      source = "cloudflare/cloudflare"
+    }
+  }
 }
 
 provider "archive" {}

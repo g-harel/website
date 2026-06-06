@@ -1,6 +1,7 @@
 resource "google_storage_bucket" "public_website" {
   name          = "g.harel.page"
   storage_class = "MULTI_REGIONAL"
+  location      = "US"
 
   website {
     main_page_suffix = "index.html"
@@ -18,7 +19,8 @@ resource "google_storage_default_object_acl" "public_website" {
 //
 
 resource "google_storage_bucket" "functions" {
-  name = "functions-222818"
+  name     = "functions-222818"
+  location = "US"
 }
 
 resource "google_storage_bucket_object" "build_config" {
