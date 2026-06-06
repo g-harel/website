@@ -44,8 +44,8 @@ github.com/envoyproxy/protoc-gen-validate v1.3.0 h1:TvGH1wof4H33rezVKWSpqKz5NXWg
 github.com/envoyproxy/protoc-gen-validate v1.3.0/go.mod h1:HvYl7zwPa5mffgyeTUHA9zHIH36nmrm7oCbo4YKoSWA=
 github.com/felixge/httpsnoop v1.0.4 h1:NFTV2Zj1bL4mc9sqWACXbQFVBBg2W3GPvqp8/ESS2Wg=
 github.com/felixge/httpsnoop v1.0.4/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
-github.com/g-harel/website v0.0.0-20260606203120-599f1fd7b42f h1:Vln4Lz1ySOv4APPZ3VmLX1pWBga82mZOYeSAdc1XGos=
-github.com/g-harel/website v0.0.0-20260606203120-599f1fd7b42f/go.mod h1:I473VCzUyWSJmHCOM+vSQT7W/XssN9oDpjAjwU5OL/w=
+github.com/g-harel/website v0.0.0-20260606205118-15fbd7a68d84 h1:vOspzDoap2PECYxRF1UbvNwTT4zytBoSqrtDFswy9r8=
+github.com/g-harel/website v0.0.0-20260606205118-15fbd7a68d84/go.mod h1:I473VCzUyWSJmHCOM+vSQT7W/XssN9oDpjAjwU5OL/w=
 github.com/go-jose/go-jose/v4 v4.1.4 h1:moDMcTHmvE6Groj34emNPLs/qtYXRVcd6S7NHbHz3kA=
 github.com/go-jose/go-jose/v4 v4.1.4/go.mod h1:x4oUasVrzR7071A4TnHLGSPpNOm2a21K9Kf04k1rs08=
 github.com/go-logr/logr v1.2.2/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
