@@ -157,31 +157,6 @@ func Build() error {
 		return fmt.Errorf("could not parse received data: %v", err)
 	}
 
-	for i := 0; i < len(config.Keyboards); i++ {
-		data.Keyboards = append(data.Keyboards, &website.CreationData{
-			Title:           config.Keyboards[i].Title,
-			ImageURL:        config.Keyboards[i].ImageURL,
-			BackgroundColor: config.Keyboards[i].BackgroundColor,
-			Link:            config.Keyboards[i].Link,
-		})
-	}
-	for i := 0; i < len(config.Illustrations); i++ {
-		data.Illustrations = append(data.Illustrations, &website.CreationData{
-			Title:           config.Illustrations[i].Title,
-			ImageURL:        config.Illustrations[i].ImageURL,
-			BackgroundColor: config.Illustrations[i].BackgroundColor,
-			Link:            config.Illustrations[i].Link,
-		})
-	}
-	for i := 0; i < len(config.Woodworking); i++ {
-		data.Woodworking = append(data.Woodworking, &website.CreationData{
-			Title:           config.Woodworking[i].Title,
-			ImageURL:        config.Woodworking[i].ImageURL,
-			BackgroundColor: config.Woodworking[i].BackgroundColor,
-			Link:            config.Woodworking[i].Link,
-		})
-	}
-
 	output, err := website.Render(env.TemplateDir, env.TemplateEntry, data)
 	if err != nil {
 		return fmt.Errorf("could not render templates: %v", err)

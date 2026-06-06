@@ -11,24 +11,17 @@ import (
 )
 
 const (
-	expectedSectionCount      = 6
+	expectedSectionCount      = 3
 	loginSectionIndex         = 0
 	projectsSectionIndex      = 1
 	contributionsSectionIndex = 2
-	keyboardsSectionIndex     = 3
-	illustrationsSectionIndex = 4
-	woodworkingSectionIndex   = 5
 )
 
 // Config represents website configuration settings.
 type Config struct {
-	GitHubLogin     string
-	InstagramHandle string
-	Projects        []*ProjectConfig
-	Contributions   []*ContributionConfig
-	Keyboards       []*CreationConfig
-	Illustrations   []*CreationConfig
-	Woodworking     []*CreationConfig
+	GitHubLogin   string
+	Projects      []*ProjectConfig
+	Contributions []*ContributionConfig
 }
 
 // ProjectConfig represents a project config item.
@@ -69,7 +62,6 @@ func (c *Config) Parse(text string) (*Config, error) {
 
 	loginLines := strings.Split(sections[loginSectionIndex], "\n")
 	c.GitHubLogin = loginLines[0]
-	c.InstagramHandle = loginLines[1]
 
 	c.Projects = []*ProjectConfig{}
 	projects := []string{}
@@ -122,54 +114,7 @@ func (c *Config) Parse(text string) (*Config, error) {
 		})
 	}
 
-	keyboards, err := parseCreationSection(sections[keyboardsSectionIndex])
-	if err != nil {
-		return nil, fmt.Errorf("could not parse creation: %v", err)
-	}
-	c.Keyboards = keyboards
-
-	illustrations, err := parseCreationSection(sections[illustrationsSectionIndex])
-	if err != nil {
-		return nil, fmt.Errorf("could not parse creation: %v", err)
-	}
-	c.Illustrations = illustrations
-
-	woodworking, err := parseCreationSection(sections[woodworkingSectionIndex])
-	if err != nil {
-		return nil, fmt.Errorf("could not parse creation: %v", err)
-	}
-	c.Woodworking = woodworking
-
 	return c, nil
-}
-
-func parseCreationSection(section string) ([]*CreationConfig, error) {
-	items := []*CreationConfig{}
-	lines := []string{}
-	if section != "" {
-		lines = strings.Split(section, "\n")
-	}
-	for _, keyboard := range lines {
-		if !strings.Contains(keyboard, "|") {
-			return nil, fmt.Errorf("creation missing separator: \"%v\"", keyboard)
-		}
-		sections := splitRepeated(keyboard, "|")
-		if len(sections) != 2 {
-			return nil, fmt.Errorf("malformed creation config: \"%v\"", keyboard)
-		}
-		metadata := splitRepeated(sections[1], " ")
-		if len(metadata) != 3 {
-			return nil, fmt.Errorf("missing creation metadata: \"%v\"", keyboard)
-		}
-
-		items = append(items, &CreationConfig{
-			Title:           strings.TrimSpace(sections[0]),
-			ImageURL:        metadata[1],
-			BackgroundColor: metadata[0],
-			Link:            metadata[2],
-		})
-	}
-	return items, nil
 }
 
 // Repeatedly split the input string using the separator.

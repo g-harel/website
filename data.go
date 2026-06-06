@@ -12,9 +12,6 @@ type Data struct {
 	User          *UserData
 	Projects      []*ProjectData
 	Contributions []*ContributionData
-	Keyboards     []*CreationData
-	Illustrations []*CreationData
-	Woodworking   []*CreationData
 }
 
 // UserData represents the user data from Config's query.
