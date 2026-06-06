@@ -4,7 +4,7 @@ go 1.26.4
 
 require (
 	cloud.google.com/go v0.40.0
-	github.com/g-harel/website v0.0.0-20240803042631-d3340f0a7fc0
+	github.com/g-harel/website v0.0.0-20260606203120-599f1fd7b42f
 )
 
 require (
