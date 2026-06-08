@@ -33,7 +33,7 @@ resource "google_storage_bucket_object" "build_function" {
   bucket = google_storage_bucket.functions.name
   # Change name to force update function.
   # https://github.com/hashicorp/terraform-provider-google/issues/1938
-  name= format("build.zip#%s", data.archive_file.build_function.output_md5)
+  name= format("build-%s.zip", data.archive_file.build_function.output_md5)
   source = data.archive_file.build_function.output_path
 }
 

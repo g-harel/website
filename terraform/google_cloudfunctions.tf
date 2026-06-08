@@ -1,4 +1,5 @@
 resource "google_cloudfunctions2_function" "build" {
+  # name used to recreate resource when source changes
   name        = "website-builder-${substr(base64encode(google_storage_bucket_object.build_function.md5hash), 0, 16)}"
   location    = "us-east1"
   description = "Website builder Cloud Function (Gen 2)"
