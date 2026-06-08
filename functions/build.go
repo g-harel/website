@@ -6,12 +6,9 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
-	"net/http"
 	"os"
 	"path"
 	"path/filepath"
-	"time"
 
 	"cloud.google.com/go/storage"
 	"github.com/g-harel/website"
@@ -43,9 +40,6 @@ var env = struct {
 // It will build a new version of the website from a remote config, remote templates and updated api data.
 // The result is uploaded to a public cloud storage bucket.
 func Build(ctx context.Context, _ interface{}) error {
-	httpClient := http.Client{
-		Timeout: 10 * time.Second,
-	}
 
 	storageClient, err := storage.NewClient(ctx)
 	if err != nil {
@@ -73,32 +67,9 @@ func Build(ctx context.Context, _ interface{}) error {
 		return fmt.Errorf("parse remote config: %v", err)
 	}
 
-	query, err := config.Query()
+	data, err := config.FetchData(ctx, env.GraphQLEndpoint, env.GraphQLToken)
 	if err != nil {
-		return fmt.Errorf("generate query from config: %v", err)
-	}
-
-	dataReq, err := http.NewRequest("POST", env.GraphQLEndpoint, bytes.NewReader(query))
-	if err != nil {
-		return fmt.Errorf("create data request: %v", err)
-	}
-	dataReq = dataReq.WithContext(ctx)
-	dataReq.Header.Add("Authorization", fmt.Sprintf("bearer %v", env.GraphQLToken))
-
-	dataRes, err := httpClient.Do(dataReq)
-	if err != nil {
-		return fmt.Errorf("request for data failed")
-	}
-
-	dataBody := &bytes.Buffer{}
-	_, err = io.Copy(dataBody, dataRes.Body)
-	if err != nil {
-		return fmt.Errorf("read data response: %v", err)
-	}
-
-	data, err := (&website.Data{}).Parse(dataBody.String())
-	if err != nil {
-		return fmt.Errorf("parse received data: %v", err)
+		return fmt.Errorf("fetch remote data: %v", err)
 	}
 
 	templates, err := storageClient.Bucket(env.TemplateBucket).Object(env.TemplateObject).NewReader(ctx)
@@ -139,7 +110,7 @@ func Build(ctx context.Context, _ interface{}) error {
 // Unzip writes the archive data to a temporary directory and returns its path.
 // The data is first written to a temporary file and decompressed from there.
 func unzip(data io.ReadCloser) (string, error) {
-	archiveFile, err := ioutil.TempFile("", "*.zip")
+	archiveFile, err := os.CreateTemp("", "*.zip")
 	if err != nil {
 		return "", fmt.Errorf("create temp archive: %v", err)
 	}
@@ -150,7 +121,7 @@ func unzip(data io.ReadCloser) (string, error) {
 	}
 	data.Close()
 
-	outputDir, err := ioutil.TempDir("", "")
+	outputDir, err := os.MkdirTemp("", "")
 	if err != nil {
 		return "", fmt.Errorf("create output directory: %v", err)
 	}
