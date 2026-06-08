@@ -2,11 +2,8 @@ package main
 
 import (
 	"bufio"
-	"bytes"
+	"context"
 	"fmt"
-	"io"
-	"io/ioutil"
-	"net/http"
 	"os"
 	"path/filepath"
 	"time"
@@ -120,7 +117,7 @@ func main() {
 func Build() error {
 	start := time.Now()
 
-	configContent, err := ioutil.ReadFile(env.ConfigPath)
+	configContent, err := os.ReadFile(env.ConfigPath)
 	if err != nil {
 		return fmt.Errorf("could not load local config")
 	}
@@ -130,31 +127,9 @@ func Build() error {
 		return fmt.Errorf("could not parse local config: %v", err)
 	}
 
-	query, err := config.Query()
+	data, err := config.FetchData(context.Background(), env.GraphQLEndpoint, env.GraphQLToken)
 	if err != nil {
-		return fmt.Errorf("could not generate query from config: %v", err)
-	}
-
-	dataReq, err := http.NewRequest("POST", env.GraphQLEndpoint, bytes.NewReader(query))
-	if err != nil {
-		return fmt.Errorf("could not create data request: %v", err)
-	}
-	dataReq.Header.Add("Authorization", fmt.Sprintf("bearer %v", env.GraphQLToken))
-
-	dataRes, err := (&http.Client{}).Do(dataReq)
-	if err != nil {
-		return fmt.Errorf("request for data failed")
-	}
-
-	dataBody := &bytes.Buffer{}
-	_, err = io.Copy(dataBody, dataRes.Body)
-	if err != nil {
-		return fmt.Errorf("could not read data response: %v", err)
-	}
-
-	data, err := (&website.Data{}).Parse(dataBody.String())
-	if err != nil {
-		return fmt.Errorf("could not parse received data: %v", err)
+		return err
 	}
 
 	output, err := website.Render(env.TemplateDir, env.TemplateEntry, data)
@@ -162,7 +137,7 @@ func Build() error {
 		return fmt.Errorf("could not render templates: %v", err)
 	}
 
-	err = ioutil.WriteFile(env.OutputFile, output.Bytes(), 0644)
+	err = os.WriteFile(env.OutputFile, output.Bytes(), 0644)
 	if err != nil {
 		return fmt.Errorf("could not write rendered output to file: %v", err)
 	}

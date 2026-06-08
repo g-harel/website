@@ -2,12 +2,16 @@ package website
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
+	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -130,8 +134,8 @@ func splitRepeated(s, sep string) []string {
 	return clean
 }
 
-// Query generates a GraphQL query string from its receiver's fields.
-func (c *Config) Query() ([]byte, error) {
+// FetchData queries the GraphQL endpoint using the configured query and returns the parsed Data.
+func (c *Config) FetchData(ctx context.Context, endpoint, token string) (*Data, error) {
 	tmpl, err := template.New("test").Parse(query)
 	if err != nil {
 		return nil, fmt.Errorf("could not parse query template: %v", err)
@@ -148,12 +152,38 @@ func (c *Config) Query() ([]byte, error) {
 	}{
 		Query: templateContent.String(),
 	}
-	b, err := json.Marshal(r)
+	query, err := json.Marshal(r)
 	if err != nil {
-		return nil, fmt.Errorf("could not marshal cuest: %v", err)
+		return nil, fmt.Errorf("could not marshal request: %v", err)
 	}
 
-	return b, nil
+	req, err := http.NewRequestWithContext(ctx, "POST", endpoint, bytes.NewReader(query))
+	if err != nil {
+		return nil, fmt.Errorf("could not create data request: %v", err)
+	}
+	req.Header.Add("Authorization", fmt.Sprintf("bearer %v", token))
+
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("request for data failed: %v", err)
+	}
+	defer res.Body.Close()
+
+	body := &bytes.Buffer{}
+	_, err = io.Copy(body, res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("could not read data response: %v", err)
+	}
+
+	data, err := (&Data{}).Parse(body.String())
+	if err != nil {
+		return nil, fmt.Errorf("could not parse received data: %v", err)
+	}
+
+	return data, nil
 }
 
 // GraphQL query template sent to GitHub api.
